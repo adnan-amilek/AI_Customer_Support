@@ -273,7 +273,7 @@ export default function AdminDashboard() {
     if (faqModal === "new") {
       setFaqs((f) => [...f, { id: Date.now(), ...data, active: true, hits: 0 }]);
       showToast("FAQ added successfully");
-    } else if (faqModal && faqModal !== "new") {
+    } else if (faqModal !== null) {
       setFaqs((f) => f.map((x) => x.id === (faqModal as FAQ).id ? { ...x, ...data } : x));
       showToast("FAQ updated");
     }
