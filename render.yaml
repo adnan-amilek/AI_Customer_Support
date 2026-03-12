@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: ai-customer-support
+    runtime: node
+    region: oregon
+    plan: free
+
+    # Build: install & build both client and server
+    buildCommand: npm run build
+
+    # Start: run compiled backend (which also serves the frontend)
+    startCommand: npm start
+
+    # Health check
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # ── Required: Google Gemini API key ──────────────────────────────────────
+      - key: GEMINI_API_KEY
+        sync: false          # you'll paste this in the Render dashboard
+
+      # ── Admin credentials ─────────────────────────────────────────────────────
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_JWT_SECRET
+        generateValue: true  # Render auto-generates a secure random value
+
+      # ── Optional: Supabase (leave empty to use in-memory store) ──────────────
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+      # ── Optional: Resend email notifications ─────────────────────────────────
+      - key: RESEND_API_KEY
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false
