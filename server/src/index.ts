@@ -13,7 +13,7 @@ import { adminRouter } from "./routes/admin.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { logger } from "./middleware/logger.js";
 import { validate, loginSchema } from "./middleware/validate.js";
-import { supabase } from "./db/supabase.js";
+import { supabase, mem } from "./db/supabase.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
