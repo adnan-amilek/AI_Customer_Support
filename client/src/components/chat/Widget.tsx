@@ -524,15 +524,19 @@ export default function App() {
     setLoading(true);
 
     try {
-      if (settings.faqs) {
-        const faqAnswer = matchLocalFAQ(text);
-        if (faqAnswer) {
-          await new Promise((r) => setTimeout(r, 500));
-          addMsg("bot", faqAnswer, "faq");
-          setLoading(false);
-          return;
-        }
+      // ── Demo intercept: show lead form instead of a text reply ──
+      const isDemoRequest = settings.leads && ["demo", "walkthrough", "tour", "show me", "see it"].some((k) =>
+        text.toLowerCase().includes(k)
+      );
+      if (isDemoRequest) {
+        await new Promise((r) => setTimeout(r, 500));
+        addMsg("bot", "Great! I'd love to set up a personalised demo for you. 🎯 Please fill in your details below and our team will reach out within 24 hours.", "faq");
+        setLoading(false);
+        setFormType("lead");
+        return;
       }
+
+      // ── All other messages → server (FAQ + AI hybrid) ──
       const res = await fetch("/api/chat/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -654,8 +658,26 @@ export default function App() {
           <div ref={endRef} />
         </div>
 
-        {/* Message Input */}
-        <MessageInput onSend={handleSend} loading={loading} disabled={chatClosed} />
+        {/* Message Input — or Closed Banner */}
+        {chatClosed ? (
+          <div className="px-4 py-4 border-t border-gray-800 bg-[#0d1117] flex flex-col items-center gap-3">
+            <div className="flex items-center gap-2 text-xs text-gray-500">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span>This chat session has ended. Start a new chat to continue.</span>
+            </div>
+            <button
+              onClick={handleNewChat}
+              className="px-5 py-2 bg-[#006AE6] hover:bg-[#0059c9] text-white text-sm font-semibold rounded-lg transition-colors duration-150 active:scale-95 flex items-center gap-2">
+              <PlusIcon />
+              Start New Chat
+            </button>
+          </div>
+        ) : (
+          <MessageInput onSend={handleSend} loading={loading} disabled={false} />
+        )}
+
 
         {/* Footer */}
         <div className="text-center text-[10px] text-gray-700 py-2 border-t border-gray-800/50">

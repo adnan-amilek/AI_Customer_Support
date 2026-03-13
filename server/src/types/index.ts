@@ -11,7 +11,7 @@ export interface ChatRequest {
 
 export interface ChatResponse {
   reply: string;
-  source: "faq" | "llm" | "fallback";
+  source: "faq" | "faq+ai" | "llm" | "fallback";
   confidence: number;
   escalate: boolean;
   faqId?: string;

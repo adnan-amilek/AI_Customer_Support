@@ -73,7 +73,8 @@ function toGeminiHistory(history: Message[]) {
 // ── Standard (non-streaming) call ──────────────────────────────────────────
 export async function getAIResponse(
   userMessage: string,
-  history: Message[]
+  history: Message[],
+  faqContext?: string
 ): Promise<string> {
   if (!genAI) return getMockResponse();
 
@@ -84,10 +85,15 @@ export async function getAIResponse(
       systemInstruction: SYSTEM_PROMPT,
     });
 
+    // If a FAQ answer was matched, inject it as grounding context
+    const augmentedMessage = faqContext
+      ? `[KNOWLEDGE BASE CONTEXT — use this as ground truth but reply naturally]:\n${faqContext}\n\n[USER QUESTION]: ${userMessage}`
+      : userMessage;
+
     // Only pass history if it has at least one turn
     const geminiHistory = toGeminiHistory(history.slice(-10));
     const chat = model.startChat(geminiHistory.length ? { history: geminiHistory } : {});
-    const result = await chat.sendMessage(userMessage);
+    const result = await chat.sendMessage(augmentedMessage);
     return result.response.text();
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
@@ -100,7 +106,8 @@ export async function getAIResponse(
 export async function streamAIResponse(
   userMessage: string,
   history: Message[],
-  res: Response
+  res: Response,
+  faqContext?: string
 ): Promise<string> {
   if (!genAI) {
     const text = getMockResponse();
@@ -125,10 +132,15 @@ export async function streamAIResponse(
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders();
 
+  // If a FAQ answer was matched, inject it as grounding context
+  const augmentedMessage = faqContext
+    ? `[KNOWLEDGE BASE CONTEXT — use this as ground truth but reply naturally]:\n${faqContext}\n\n[USER QUESTION]: ${userMessage}`
+    : userMessage;
+
   try {
     const geminiHistory = toGeminiHistory(history.slice(-10));
     const chat = model.startChat(geminiHistory.length ? { history: geminiHistory } : {});
-    const result = await chat.sendMessageStream(userMessage);
+    const result = await chat.sendMessageStream(augmentedMessage);
 
     let fullText = "";
     for await (const chunk of result.stream) {

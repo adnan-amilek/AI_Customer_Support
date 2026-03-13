@@ -27,20 +27,20 @@ chatRouter.post(
 
       // 1. Try FAQ match
       const { faq, confidence } = await matchFAQ(message);
-      let reply: string, source: "faq" | "llm" | "fallback";
+      let reply: string, source: "faq" | "faq+ai" | "llm" | "fallback";
 
-      if (faq && confidence >= 0.35) {
-        reply = faq.answer;
-        source = "faq";
-      } else {
-        // 2. Gemini LLM fallback
-        try {
-          reply = await getAIResponse(message, context);
-          source = "llm";
-        } catch (aiErr) {
-          logger.warn({ aiErr }, "AI call failed — serving fallback");
-          reply =
-            "I'm having trouble connecting right now. Would you like me to connect you with a human agent?";
+      try {
+        // Always call AI — pass FAQ answer as grounding context if matched
+        reply = await getAIResponse(message, context, faq?.answer);
+        source = faq && confidence >= 0.35 ? "faq+ai" : "llm";
+      } catch (aiErr) {
+        // AI failed — fall back to raw FAQ answer if we have one, else generic error
+        logger.warn({ aiErr }, "AI call failed — serving fallback");
+        if (faq && confidence >= 0.35) {
+          reply = faq.answer;
+          source = "faq";
+        } else {
+          reply = "I'm having trouble connecting right now. Would you like me to connect you with a human agent?";
           source = "fallback";
         }
       }
@@ -81,19 +81,10 @@ chatRouter.post(
       await saveMessage(sessionId, "user", message);
 
       const { faq, confidence } = await matchFAQ(message);
-      if (faq && confidence >= 0.35) {
-        res.setHeader("Content-Type", "text/event-stream");
-        res.setHeader("Cache-Control", "no-cache");
-        res.flushHeaders();
-        res.write(`data: ${JSON.stringify({ chunk: faq.answer })}\n\n`);
-        res.write(`data: ${JSON.stringify({ done: true, source: "faq" })}\n\n`);
-        res.end();
-        await saveMessage(sessionId, "assistant", faq.answer, "faq", confidence);
-        return;
-      }
-
-      const fullText = await streamAIResponse(message, context, res);
-      await saveMessage(sessionId, "assistant", fullText, "llm", confidence);
+      // Always call AI — pass FAQ answer as grounding context if matched
+      const fullText = await streamAIResponse(message, context, res, faq?.answer);
+      const source = faq && confidence >= 0.35 ? "faq+ai" : "llm";
+      await saveMessage(sessionId, "assistant", fullText, source, confidence);
     } catch (err) {
       next(err);
     }
