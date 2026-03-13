@@ -512,7 +512,8 @@ export default function App() {
         body: JSON.stringify({ sessionId, name, email, type: "human_request" }),
       });
     } catch { /* non-blocking */ }
-    addMsg("bot", `Thanks ${name}! A human agent will reach out to **${email}** within 2 hours. We'll be in touch soon! 👋`, "system");
+    addMsg("bot", `Thanks ${name}! A human agent will reach out to **${email}** within 24 hours. We'll be in touch soon! 👋`, "system");
+    setChatClosed(true);
   };
 
   // ── Send message ─────────────────────────────────────────────────────────────
