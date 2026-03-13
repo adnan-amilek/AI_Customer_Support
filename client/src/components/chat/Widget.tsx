@@ -254,12 +254,13 @@ function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
 }
 
 // ── Sidebar ────────────────────────────────────────────────────────────────────
-function Sidebar({ settings, onChange, onNewChat, onClose, onTalkToHuman }: {
+function Sidebar({ settings, onChange, onNewChat, onClose, onTalkToHuman, stats }: {
   settings: Settings;
   onChange: (key: keyof Settings) => void;
   onNewChat: () => void;
   onClose: () => void;
   onTalkToHuman: () => void;
+  stats: { sessions: number; csat: number };
 }) {
   return (
     <div className="w-64 sm:w-64 bg-[#13151A] border-r border-[#1E2028] flex flex-col h-full">
@@ -376,12 +377,12 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onTalkToHuman }: {
         </div>
         <div className="flex items-center">
           <div className="flex-1 text-center">
-            <p className="text-xl font-bold text-[#F5F5F5]">123</p>
+            <p className="text-xl font-bold text-[#F5F5F5]">{stats.sessions}</p>
             <p className="text-xs text-[#636674] mt-0.5">Session</p>
           </div>
           <div className="w-px h-8 bg-[#26272F]" />
           <div className="flex-1 text-center">
-            <p className="text-xl font-bold text-[#F5F5F5]">94%</p>
+            <p className="text-xl font-bold text-[#F5F5F5]">{stats.csat}%</p>
             <p className="text-xs text-[#636674] mt-0.5">CSAT</p>
           </div>
         </div>
@@ -447,10 +448,19 @@ export default function App() {
   const [chatClosed,  setChatClosed]  = useState(false);
   const [formType,    setFormType]    = useState<"lead" | "human" | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [stats,       setStats]       = useState<{ sessions: number; csat: number }>({ sessions: 0, csat: 94 });
   const endRef = useRef<HTMLDivElement>(null);
   const idRef  = useRef(1);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading, formType]);
+
+  // Fetch live stats for sidebar profile card
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((d) => setStats({ sessions: d.sessions ?? 0, csat: d.csat ?? 94 }))
+      .catch(() => {});
+  }, []);
 
   // Close sidebar on resize to desktop
   useEffect(() => {
@@ -569,6 +579,7 @@ export default function App() {
           onNewChat={handleNewChat}
           onClose={() => setSidebarOpen(false)}
           onTalkToHuman={() => { setFormType("human"); setSidebarOpen(false); }}
+          stats={stats}
         />
       </div>
 
