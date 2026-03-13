@@ -20,6 +20,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = parseInt(process.env.PORT ?? "3001", 10);
 
+// ── Trust Render's reverse proxy ───────────────────────────────────────────────
+app.set("trust proxy", 1);
+
 // ── Global middleware ──────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(
