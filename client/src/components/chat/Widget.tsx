@@ -32,9 +32,24 @@ const Icon = ({ d, size = 16, stroke = "currentColor", fill = "none", strokeWidt
     <path d={d} />
   </svg>
 );
-const SendIcon  = () => <Icon d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" size={16} />;
+const SendIcon  = () => <Icon d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" size={14} />;
 const UserIcon  = () => <Icon d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" size={14} />;
-const PlusIcon  = () => <Icon d="M12 5v14M5 12h14" size={13} strokeWidth={2.5} />;
+const PlusIcon  = () => <Icon d="M12 5v14M5 12h14" size={12} strokeWidth={2.5} />;
+const BellIcon  = () => (
+  <svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.51322 0C7.59151 1.95092e-05 7.66941 0.0146932 7.74174 0.0439453C7.81403 0.0732145 7.87976 0.116863 7.9351 0.170898C7.99031 0.224874 8.03408 0.288908 8.064 0.359375C8.09393 0.429911 8.10985 0.505686 8.1099 0.582031V1.49121C9.35444 1.6107 10.5095 2.17702 11.3501 3.08105C12.1908 3.98519 12.6568 5.16259 12.6587 6.38379V6.7168C12.6785 7.79986 13.0146 8.8565 13.6294 9.76172L14.1783 10.5537C14.4041 10.8932 14.5323 11.286 14.5503 11.6904C14.5684 12.0949 14.4756 12.4971 14.2808 12.8545C14.086 13.2119 13.7966 13.5122 13.4429 13.7236C13.0892 13.935 12.6837 14.0499 12.2691 14.0566H9.63627V14.3125C9.5658 14.8146 9.31158 15.2753 8.92045 15.6084C8.5294 15.9414 8.02818 16.1249 7.50932 16.125C6.99029 16.125 6.48834 15.9415 6.09721 15.6084C5.70613 15.2753 5.45185 14.8146 5.38139 14.3125V14.0566H2.76518C2.15978 14.0566 1.579 13.8213 1.15092 13.4033C0.723027 12.9854 0.482087 12.419 0.481973 11.8281C0.484703 11.3534 0.640634 10.8912 0.927286 10.5078L1.46049 9.79297C2.21213 8.80608 2.61201 7.60578 2.59818 6.37598C2.57596 5.40982 2.85331 4.45978 3.39408 3.65039C3.93488 2.84099 4.71387 2.21023 5.62846 1.84082C6.04168 1.67995 6.4747 1.57288 6.91654 1.52246V0.582031C6.9166 0.505686 6.93252 0.429911 6.96244 0.359375C6.9924 0.288885 7.0361 0.224878 7.09135 0.170898C7.14674 0.116813 7.21234 0.0732164 7.28471 0.0439453C7.35706 0.0146901 7.43491 0 7.51322 0Z" fill="#808290"/>
+  </svg>
+);
+const NoteIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+  </svg>
+);
+const ChevronLeftIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 18l-6-6 6-6"/>
+  </svg>
+);
 const MenuIcon  = () => <Icon d="M3 12h18M3 6h18M3 18h18" size={18} />;
 const CloseIcon = () => <Icon d="M18 6L6 18M6 6l12 12" size={18} />;
 
@@ -58,11 +73,13 @@ const ClarixLogo = () => (
   </svg>
 );
 
-// ── Bell icon (Union.svg) ──────────────────────────────────────────────────────
-const BellIcon = () => (
-  <svg width="15" height="17" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.51322 0C7.59151 1.95092e-05 7.66941 0.0146932 7.74174 0.0439453C7.81403 0.0732145 7.87976 0.116863 7.9351 0.170898C7.99031 0.224874 8.03408 0.288908 8.064 0.359375C8.09393 0.429911 8.10985 0.505686 8.1099 0.582031V1.49121C9.35444 1.6107 10.5095 2.17702 11.3501 3.08105C12.1908 3.98519 12.6568 5.16259 12.6587 6.38379V6.7168C12.6785 7.79986 13.0146 8.8565 13.6294 9.76172L14.1783 10.5537C14.4041 10.8932 14.5323 11.286 14.5503 11.6904C14.5684 12.0949 14.4756 12.4971 14.2808 12.8545C14.086 13.2119 13.7966 13.5122 13.4429 13.7236C13.0892 13.935 12.6837 14.0499 12.2691 14.0566H9.63627V14.3125C9.5658 14.8146 9.31158 15.2753 8.92045 15.6084C8.5294 15.9414 8.02818 16.1249 7.50932 16.125C6.99029 16.125 6.48834 15.9415 6.09721 15.6084C5.70613 15.2753 5.45185 14.8146 5.38139 14.3125V14.0566H2.76518C2.15978 14.0566 1.579 13.8213 1.15092 13.4033C0.723027 12.9854 0.482087 12.419 0.481973 11.8281C0.484703 11.3534 0.640634 10.8912 0.927286 10.5078L1.46049 9.79297C2.21213 8.80608 2.61201 7.60578 2.59818 6.37598C2.57596 5.40982 2.85331 4.45978 3.39408 3.65039C3.93488 2.84099 4.71387 2.21023 5.62846 1.84082C6.04168 1.67995 6.4747 1.57288 6.91654 1.52246V0.582031C6.9166 0.505686 6.93252 0.429911 6.96244 0.359375C6.9924 0.288885 7.0361 0.224878 7.09135 0.170898C7.14674 0.116813 7.21234 0.0732164 7.28471 0.0439453C7.35706 0.0146901 7.43491 0 7.51322 0ZM6.57475 14.1807C6.61226 14.3974 6.72723 14.5942 6.89897 14.7363C7.07067 14.8784 7.28819 14.9564 7.51322 14.957C7.73904 14.9596 7.95807 14.8827 8.13041 14.7402C8.30282 14.5976 8.41724 14.3988 8.4517 14.1807V14.0566H6.57475V14.1807ZM7.6558 2.64062C7.1113 2.63776 6.57144 2.73788 6.06596 2.93555C5.38366 3.21333 4.80149 3.68454 4.39604 4.28809C3.99074 4.8915 3.7798 5.59976 3.79057 6.32129C3.82514 7.81321 3.35875 9.27565 2.46244 10.4844L1.93022 11.1982C1.77494 11.3738 1.68484 11.5964 1.67533 11.8281C1.67545 12.1102 1.79043 12.3806 1.99467 12.5801C2.199 12.7795 2.47627 12.8916 2.76518 12.8916H12.2691C12.4156 12.8917 12.561 12.8625 12.6958 12.8066C12.8306 12.7508 12.9526 12.6693 13.0542 12.5664C13.1559 12.4635 13.2353 12.3416 13.2876 12.208C13.34 12.0745 13.3642 11.932 13.3589 11.7891C13.365 11.5662 13.3013 11.3467 13.1763 11.1602L12.6431 10.3828C11.86 9.2339 11.4524 7.87995 11.4742 6.5V6.37598C11.4742 5.38661 11.0717 4.43762 10.356 3.7373C9.64028 3.03706 8.66899 2.64268 7.6558 2.64062Z" fill="#808290"/>
-  </svg>
+// ── Verify badge ──────────────────────────────────────────────────────────────
+const VerifyBadge = () => (
+  <div className="w-[18px] h-[18px] rounded-full bg-[#006AE6] flex items-center justify-center shrink-0">
+    <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+      <path d="M2 5l2.5 2.5 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </div>
 );
 
 // ── Local FAQ Knowledge Base ───────────────────────────────────────────────────
@@ -97,7 +114,7 @@ function matchLocalFAQ(input: string): string | null {
 function renderMD(text: string) {
   return text.split("\n").map((line, i) => {
     const parts = line.split(/(\*\*[^*]+\*\*)/g).map((p, j) =>
-      p.startsWith("**") ? <strong key={j} className="font-semibold text-white">{p.slice(2, -2)}</strong> : p
+      p.startsWith("**") ? <strong key={j} className="font-semibold text-[#f5f5f5]">{p.slice(2, -2)}</strong> : p
     );
     const isBullet = line.trim().startsWith("•") || line.trim().startsWith("-");
     return (
@@ -113,7 +130,7 @@ function TypingDots() {
   return (
     <div className="flex items-center gap-1.5 px-4 py-3">
       {[0, 1, 2].map((i) => (
-        <span key={i} className="w-2 h-2 rounded-full bg-gray-500"
+        <span key={i} className="w-2 h-2 rounded-full bg-[#464852]"
           style={{ animation: `tdB 1.2s ${i * 0.2}s infinite` }} />
       ))}
       <style>{`@keyframes tdB{0%,80%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-5px);opacity:1}}`}</style>
@@ -125,12 +142,37 @@ function TypingDots() {
 function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void }) {
   return (
     <button type="button" onClick={onChange} role="switch" aria-checked={checked}
-      className={`relative inline-flex w-9 h-5 shrink-0 rounded-full transition-colors duration-200
-        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900
-        ${checked ? "bg-blue-500" : "bg-gray-700"}`}>
-      <span className={`inline-block w-3.5 h-3.5 bg-white rounded-full shadow transition-transform duration-200 self-center
-        ${checked ? "translate-x-4" : "translate-x-0.5"}`} />
+      className={`relative inline-flex w-[30px] h-[18px] shrink-0 rounded-full transition-colors duration-200
+        focus:outline-none ${checked ? "bg-[#006AE6]" : "bg-[#363843]"}`}>
+      <span className={`inline-block w-3 h-3 bg-white rounded-full shadow transition-transform duration-200 self-center
+        ${checked ? "translate-x-[15px]" : "translate-x-[3px]"}`} />
     </button>
+  );
+}
+
+// ── Bot Avatar ────────────────────────────────────────────────────────────────
+function BotAvatar({ size = 30 }: { size?: number }) {
+  return (
+    <div
+      className="relative shrink-0 rounded-full flex items-center justify-center"
+      style={{
+        width: size, height: size,
+        background: "#272134",
+        border: "0.375px solid rgba(136,63,255,0.2)",
+      }}
+    >
+      <span className="font-semibold text-[#883fff]" style={{ fontSize: size * 0.6, lineHeight: 1 }}>S</span>
+      <span
+        className="absolute rounded-full border-[#111217]"
+        style={{
+          width: size * 0.2, height: size * 0.2,
+          bottom: -1, right: -1,
+          background: "#00A261",
+          borderWidth: size * 0.04,
+          borderStyle: "solid",
+        }}
+      />
+    </div>
   );
 }
 
@@ -154,39 +196,48 @@ function InlineFormCard({
   };
 
   return (
-    <div className="flex items-start gap-2 sm:gap-3 mb-4" style={{ animation: "fadeUp 0.2s ease" }}>
-      {/* Bot avatar — violet S */}
-      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-violet-600 flex items-center justify-center shrink-0 mt-0.5 text-white text-xs font-bold">
-        S
-      </div>
-      {/* Compact card — max width ~320px, no wider */}
-      <div className="w-full max-w-[320px] rounded-2xl rounded-tl-sm overflow-hidden bg-[#1A1C22] border border-[#2A2C36] shadow-lg">
-        {/* Header */}
-        <div className="px-4 py-3 border-b border-[#2A2C36] flex items-center justify-between">
-          <p className="text-sm font-semibold text-[#F5F5F5]">{title}</p>
-          <button onClick={onDismiss} className="text-[#636674] hover:text-[#F5F5F5] transition-colors p-0.5 shrink-0">
-            <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-          </button>
-        </div>
-        {/* Body — label on left, input on right */}
-        <div className="px-4 py-3 flex flex-col gap-2.5">
-          <div className="flex items-center gap-3">
-            <label className="text-xs text-[#808290] w-10 shrink-0">Name</label>
-            <input value={name} onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              className="flex-1 text-sm bg-[#26272F] border border-[#363843] rounded-lg px-3 py-1.5 text-[#F5F5F5] placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-1 focus:ring-[#006AE6]/30" />
+    <div className="flex items-end gap-[14px] px-[20px] mb-[10px]" style={{ animation: "fadeUp 0.2s ease" }}>
+      <BotAvatar size={30} />
+      {/* Form card styled as bot bubble */}
+      <div className="rounded-br-[12px] rounded-tl-[12px] rounded-tr-[12px] border overflow-hidden shadow-[0px_10px_14px_0px_rgba(15,42,81,0.03)]"
+        style={{ background: "#0d0e12", borderColor: "#26272f" }}>
+        <div className="p-[16px] flex flex-col gap-[16px] min-w-[320px] max-w-[420px]">
+          {/* Header */}
+          <div className="flex flex-col gap-[12px]">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-[16px] text-[#f5f5f5] leading-[20px]">{title}</p>
+              <button onClick={onDismiss} className="text-[#636674] hover:text-[#f5f5f5] transition-colors ml-4 shrink-0">
+                <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            {/* Divider */}
+            <div className="h-px w-full bg-[#26272f]" />
           </div>
-          <div className="flex items-center gap-3">
-            <label className="text-xs text-[#808290] w-10 shrink-0">Email</label>
-            <input value={email} onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              onKeyDown={(e) => e.key === "Enter" && handle()}
-              className="flex-1 text-sm bg-[#26272F] border border-[#363843] rounded-lg px-3 py-1.5 text-[#F5F5F5] placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-1 focus:ring-[#006AE6]/30" />
+          {/* Fields */}
+          <div className="flex flex-col">
+            <div className="flex items-center gap-[10px] py-[6px]">
+              <div className="w-[100px] shrink-0">
+                <p className="text-[13px] text-[#b5b7c8] leading-[14px]">Name</p>
+              </div>
+              <input value={name} onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                className="flex-1 text-[13px] bg-[#1f212a] border border-[#363843] rounded-[6px] px-[12px] py-[13px] text-[#f5f5f5] placeholder-[#808290] focus:outline-none focus:border-[#006AE6] focus:ring-1 focus:ring-[#006AE6]/30 leading-[14px]" />
+            </div>
+            <div className="flex items-center gap-[10px] py-[6px]">
+              <div className="w-[100px] shrink-0">
+                <p className="text-[13px] text-[#b5b7c8] leading-[14px]">Email</p>
+              </div>
+              <input value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                onKeyDown={(e) => e.key === "Enter" && handle()}
+                className="flex-1 text-[13px] bg-[#1f212a] border border-[#363843] rounded-[6px] px-[12px] py-[13px] text-[#f5f5f5] placeholder-[#808290] focus:outline-none focus:border-[#006AE6] focus:ring-1 focus:ring-[#006AE6]/30 leading-[14px]" />
+            </div>
           </div>
-          {err && <p className="text-red-400 text-xs pl-[52px]">{err}</p>}
-          <div className="flex justify-end pt-1">
+          {err && <p className="text-red-400 text-xs -mt-2">{err}</p>}
+          {/* Submit */}
+          <div className="flex justify-end">
             <button onClick={handle}
-              className="px-4 py-1.5 bg-[#006AE6] hover:bg-blue-500 text-white text-xs font-medium rounded-lg transition-colors active:scale-[0.98]">
+              className="px-[12px] py-[10px] bg-[#006AE6] hover:bg-blue-500 text-[#f5f5f5] text-[12px] font-medium rounded-[6px] transition-colors active:scale-[0.98] leading-[12px]">
               {submitLabel}
             </button>
           </div>
@@ -200,34 +251,39 @@ function InlineFormCard({
 function Bubble({ msg }: { msg: ChatMessage }) {
   const isBot = msg.role === "bot";
   return (
-    <div className={`flex items-end gap-2 sm:gap-3 mb-3 ${isBot ? "" : "flex-row-reverse"}`}
-      style={{ animation: "fadeUp 0.2s ease" }}>
-      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}`}</style>
-
-      {/* Avatar */}
+    <div
+      className={`flex items-end gap-[14px] px-[20px] mb-[10px] ${isBot ? "" : "flex-row-reverse"}`}
+      style={{ animation: "fadeUp 0.2s ease" }}
+    >
       {isBot ? (
-        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-violet-600 flex items-center justify-center shrink-0 text-white text-xs font-bold mb-0.5">
-          S
-        </div>
+        <BotAvatar size={30} />
       ) : (
-        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#26272F] border border-[#363843] flex items-center justify-center shrink-0 text-[#808290] mb-0.5">
+        <div className="w-[30px] h-[30px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center shrink-0 overflow-hidden">
           <UserIcon />
         </div>
       )}
 
-      {/* Bubble */}
-      <div className={`max-w-[72%] sm:max-w-[68%] px-3 sm:px-4 py-2.5 rounded-2xl text-sm leading-relaxed
-        ${isBot
-          ? "bg-[#1A1C22] text-[#D1D3E0] rounded-bl-sm border border-[#2A2C36]"
-          : "bg-[#006AE6] text-white rounded-br-sm"
-        }`}>
-        {isBot ? renderMD(msg.text) : msg.text}
+      <div className="flex flex-col gap-[4px] max-w-[75%]" style={{ alignItems: isBot ? "flex-start" : "flex-end" }}>
+        <div
+          className={`px-[14px] py-[10px] text-[16px] leading-[30px] tracking-[-0.16px] opacity-90 text-[#f5f5f5]
+            border ${isBot
+              ? "rounded-br-[12px] rounded-tl-[12px] rounded-tr-[12px]"
+              : "rounded-bl-[12px] rounded-tl-[12px] rounded-tr-[12px]"
+            }`}
+          style={{
+            background: "#0d0e12",
+            borderColor: "rgba(54,56,67,0.5)",
+          }}
+        >
+          {isBot ? renderMD(msg.text) : msg.text}
+        </div>
+        <p className="text-[12px] text-[#9a9cae] leading-[22px]">Just Now</p>
       </div>
     </div>
   );
 }
 
-// ── Quick Replies (in chat area — Pricing + Demo only) ────────────────────────
+// ── Quick Replies (Pricing + Demo only — shown on first message) ───────────────
 function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
   settings: Settings;
   onFAQ: (msg: string) => void;
@@ -242,10 +298,10 @@ function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
   if (!visible || buttons.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2.5 mb-4 ml-9 sm:ml-11 items-start">
+    <div className="flex flex-col gap-2.5 mb-[10px] px-[20px] ml-[44px] items-start">
       {buttons.map((b) => (
         <button key={b.label} onClick={b.action}
-          className="text-left px-4 py-3 rounded-xl border border-gray-700 bg-gray-800/60 text-[15px] font-semibold text-gray-200 hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-150 active:scale-[0.98] leading-snug">
+          className="text-left px-4 py-3 rounded-xl border border-[#363843] bg-[#1f212a] text-[15px] font-semibold text-[#9a9cae] hover:bg-[#26272f] hover:text-[#f5f5f5] hover:border-[#464852] transition-all duration-150 active:scale-[0.98] leading-snug">
           {b.label}
         </button>
       ))}
@@ -254,147 +310,144 @@ function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
 }
 
 // ── Sidebar ────────────────────────────────────────────────────────────────────
-function Sidebar({ settings, onChange, onNewChat, onClose, onTalkToHuman, stats }: {
+function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman, stats }: {
   settings: Settings;
   onChange: (key: keyof Settings) => void;
   onNewChat: () => void;
   onClose: () => void;
+  onLead: () => void;
   onTalkToHuman: () => void;
   stats: { sessions: number; csat: number };
 }) {
   return (
-    <div className="w-64 sm:w-64 bg-[#13151A] border-r border-[#1E2028] flex flex-col h-full">
+    <div className="w-[270px] bg-[#111217] flex flex-col h-full overflow-hidden shrink-0">
 
-      {/* ── Top: Branding ── */}
-      <div className="px-4 py-4 flex items-center justify-between shrink-0">
-        <ClarixLogo />
+      {/* ── Header ── */}
+      <div className="h-[70px] px-[15px] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-[8px]">
+          <div className="bg-[#1b1c22] border border-[#363843] rounded-full p-[7px] flex items-center justify-center">
+            <ClarixLogo />
+          </div>
+        </div>
         <div className="flex items-center gap-1">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#636674" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-          <button onClick={onClose} className="sm:hidden text-[#636674] hover:text-[#9A9CAE] rounded-lg p-1 transition-colors">
+          <button
+            className="w-[28px] h-[28px] bg-[#1b1c22] rounded-full flex items-center justify-center text-[#636674] hover:text-[#f5f5f5] transition-colors">
+            <ChevronLeftIcon />
+          </button>
+          <button onClick={onClose} className="sm:hidden text-[#636674] hover:text-[#9A9CAE] rounded-lg p-1 transition-colors ml-1">
             <CloseIcon />
           </button>
         </div>
       </div>
 
-      {/* ── Chat tab — full width, clicking starts new chat ── */}
-      <div className="px-3 pb-5 shrink-0">
-        <div className="flex bg-[#1A1C22] rounded-xl p-1">
-          <button
-            onClick={() => { onNewChat(); onClose(); }}
-            className="flex-1 px-4 py-2 bg-[#006AE6] text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-[#0059c9] transition-colors duration-150 active:scale-[0.97]">
-            Chat
-          </button>
+      {/* ── Chat Bot Settings ── */}
+      <div className="px-[15px] flex flex-col gap-[6px] shrink-0">
+        <div className="flex items-center pb-[10px] px-[5px]">
+          <p className="text-[14px] text-[#636674] leading-[14px]">Chat Bot Settings</p>
+        </div>
+
+        {/* FAQ row — active (highlighted) */}
+        <div className="bg-[#1b1c22] flex items-center justify-between p-[10px] rounded-[6px]">
+          <div className="flex gap-[10px] items-start">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <div className="flex flex-col gap-[4px]">
+              <p className="font-medium text-[14px] text-[#f5f5f5] leading-[14px]">FAQ</p>
+              <p className="text-[12px] text-[#f5f5f5] leading-[14px]">Overview</p>
+            </div>
+          </div>
+          <Toggle checked={settings.faqs} onChange={() => onChange("faqs")} />
+        </div>
+
+        {/* Lead Capture row — inactive */}
+        <div className="flex items-center justify-between p-[10px] rounded-[6px]">
+          <div className="flex gap-[10px] items-start">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9a9cae" strokeWidth="1.8" strokeLinecap="round" className="shrink-0 mt-0.5">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+              <path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+            <div className="flex flex-col gap-[4px]">
+              <p className="font-medium text-[14px] text-[#9a9cae] leading-[14px]">Lead Capture</p>
+              <p className="text-[12px] text-[#9a9cae] leading-[14px]">Collect Contact Details</p>
+            </div>
+          </div>
+          <Toggle checked={settings.leads} onChange={() => onChange("leads")} />
         </div>
       </div>
 
-      {/* ── Quick Reply ── */}
-      <div className="px-4 pb-5 shrink-0">
-        <p className="text-xs font-medium text-[#636674] mb-3">Quick Reply</p>
-        <button
-          onClick={() => { onTalkToHuman(); onClose(); }}
-          className="text-left w-full px-2 py-1.5 -mx-2 text-sm text-[#9A9CAE] hover:text-[#F5F5F5] hover:bg-[#1E2028] rounded-lg transition-all duration-150">
-          Talk to human
-        </button>
-      </div>
-
-      {/* ── spacer ── */}
+      {/* ── Spacer ── */}
       <div className="flex-1" />
 
-      {/* ── Chat Bot Settings ── */}
-      <div className="px-3 pb-3 shrink-0">
-        <p className="text-xs font-medium text-[#636674] mb-3 px-1">Chat Bot Settings</p>
-        <div className="flex flex-col gap-2">
+      {/* ── Bottom section ── */}
+      <div className="px-[15px] pb-[15px] flex flex-col gap-[10px] shrink-0">
 
-          {/* FAQ card */}
-          <div className="bg-[#1A1C22] rounded-2xl px-3 py-3 flex items-center justify-between hover:bg-[#1E2028] transition-colors duration-150 cursor-default">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#13151A] rounded-xl flex items-center justify-center shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#808290" strokeWidth="1.8" strokeLinecap="round">
-                  <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
-                  <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
-                  <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
-                  <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-[#F5F5F5]">FAQ</p>
-                <p className="text-xs text-[#636674]">Overview</p>
+        {/* Agent Profile Card */}
+        <div className="bg-[#111217] border border-[#1b1c22] rounded-[6px] shadow-[0px_3px_4px_0px_rgba(0,0,0,0.03)] overflow-hidden">
+          <div className="px-[15px] py-[16px] flex flex-col gap-[24px] items-center">
+            {/* Avatar + info */}
+            <div className="flex gap-[10px] items-center w-full">
+              <BotAvatar size={50} />
+              <div className="flex flex-col gap-[8px]">
+                <div className="flex gap-[4px] items-center">
+                  <p className="font-medium text-[16px] text-[#f5f5f5] leading-[16px]">Clarix</p>
+                  <VerifyBadge />
+                </div>
+                <div className="flex items-center gap-[5px]">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9a9cae" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                  </svg>
+                  <p className="text-[14px] text-[#9a9cae] leading-[14px] text-center">AI Support Agent</p>
+                </div>
               </div>
             </div>
-            <Toggle checked={settings.faqs} onChange={() => onChange("faqs")} />
-          </div>
-
-          {/* Lead Capture card */}
-          <div className="bg-[#1A1C22] rounded-2xl px-3 py-3 flex items-center justify-between hover:bg-[#1E2028] transition-colors duration-150 cursor-default">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#13151A] rounded-xl flex items-center justify-center shrink-0">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#808290" strokeWidth="1.8" strokeLinecap="round">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 010 7.75"/>
-                </svg>
+            {/* Stats */}
+            <div className="flex gap-[12px] w-full">
+              <div className="flex-1 border border-dashed border-[#464852] rounded-[4px] px-[11px] py-[9px] flex flex-col gap-[7px] overflow-hidden">
+                <p className="font-medium text-[14px] text-[#f5f5f5] leading-[14px]">{stats.sessions}</p>
+                <p className="text-[12px] text-[#9a9cae] leading-[12px]">Session</p>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-[#F5F5F5]">Lead Capture</p>
-                <p className="text-xs text-[#636674]">Collect Contact Details</p>
+              <div className="flex-1 border border-dashed border-[#464852] rounded-[4px] px-[11px] py-[9px] flex flex-col gap-[7px] overflow-hidden">
+                <p className="font-medium text-[14px] text-[#f5f5f5] leading-[14px]">{stats.csat}%</p>
+                <p className="text-[12px] text-[#9a9cae] leading-[12px]">CSAT</p>
               </div>
-            </div>
-            <Toggle checked={settings.leads} onChange={() => onChange("leads")} />
-          </div>
-
-        </div>
-      </div>
-
-      {/* ── Agent profile card ── */}
-      <div className="mx-3 mb-3 bg-[#1A1C22] rounded-2xl p-4 hover:bg-[#1E2028] transition-colors duration-150">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="relative shrink-0">
-            <div className="w-12 h-12 rounded-full bg-violet-600 flex items-center justify-center text-white text-base font-bold shadow-lg">
-              S
-            </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-[#1A1C22]" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <p className="text-sm font-bold text-[#F5F5F5]">Clarix</p>
-              <div className="w-4 h-4 rounded-full bg-[#006AE6] flex items-center justify-center shrink-0">
-                <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
-                  <path d="M2 5l2.5 2.5 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#636674" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-                <polyline points="9 22 9 12 15 12 15 22"/>
-              </svg>
-              <p className="text-xs text-[#636674]">AI Support Agent</p>
             </div>
           </div>
         </div>
-        <div className="flex items-center">
-          <div className="flex-1 text-center">
-            <p className="text-xl font-bold text-[#F5F5F5]">{stats.sessions}</p>
-            <p className="text-xs text-[#636674] mt-0.5">Session</p>
-          </div>
-          <div className="w-px h-8 bg-[#26272F]" />
-          <div className="flex-1 text-center">
-            <p className="text-xl font-bold text-[#F5F5F5]">{stats.csat}%</p>
-            <p className="text-xs text-[#636674] mt-0.5">CSAT</p>
-          </div>
-        </div>
-      </div>
 
-      {/* ── Bottom: user icon + bell ── */}
-      <div className="px-4 py-3 border-t border-[#1E2028] flex items-center justify-between shrink-0">
+        {/* New chat button */}
         <button
-          className="w-10 h-10 rounded-full border border-[#2A2C36] flex items-center justify-center text-[#636674] hover:text-[#F5F5F5] hover:border-[#636674] transition-all duration-150 active:scale-95">
+          onClick={() => { onNewChat(); onClose(); }}
+          className="w-full bg-[#1f212a] border border-[#363843] flex items-center justify-center gap-[4px] px-[10px] py-[9px] rounded-[6px] transition-colors hover:bg-[#26272f] hover:border-[#464852] active:scale-[0.98]">
+          <PlusIcon />
+          <p className="font-medium text-[12px] text-[#9a9cae] leading-[12px]">New chat</p>
+        </button>
+
+        {/* Capture Lead Info button */}
+        <button
+          onClick={() => { onLead(); onClose(); }}
+          className="w-full bg-[#006AE6] hover:bg-blue-500 flex items-center justify-center gap-[4px] px-[10px] py-[9px] rounded-[6px] transition-colors active:scale-[0.98]">
+          <NoteIcon />
+          <p className="font-medium text-[12px] text-[#f5f5f5] leading-[12px]">Capture Lead InFo</p>
+        </button>
+
+      </div>
+
+      {/* ── Bottom bar ── */}
+      <div className="pb-[7px] pl-[25px] pr-[15px] flex items-center justify-between shrink-0">
+        <button
+          onClick={() => { onTalkToHuman(); onClose(); }}
+          title="Talk to human"
+          className="w-[32px] h-[32px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center overflow-hidden text-gray-600 hover:opacity-80 transition-opacity">
           <UserIcon />
         </button>
-        <button className="w-10 h-10 rounded-full border border-[#2A2C36] flex items-center justify-center text-[#636674] hover:text-[#F5F5F5] hover:border-[#636674] transition-colors duration-150">
+        <button
+          title="Notifications"
+          className="w-[28px] h-[28px] flex items-center justify-center text-[#636674] hover:text-[#f5f5f5] transition-colors">
           <BellIcon />
         </button>
       </div>
@@ -419,19 +472,21 @@ function MessageInput({ onSend, loading, disabled }: {
   };
 
   return (
-    <div className="px-3 sm:px-4 py-3 border-t border-gray-800 bg-gray-900 flex gap-2 sm:gap-3 items-center">
-      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-700 flex items-center justify-center shrink-0 text-gray-400">
-        <UserIcon />
+    <div className="bg-[#1f212a] border border-[#26272f] rounded-[6px] mx-0 flex items-center justify-between px-[10px] py-[8px] gap-[10px]">
+      <div className="flex items-center gap-[10px] flex-1 min-w-0">
+        <div className="w-[30px] h-[30px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center shrink-0 overflow-hidden text-gray-600">
+          <UserIcon />
+        </div>
+        <textarea ref={ref} value={val} onChange={(e) => setVal(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
+          placeholder="Write a message..." rows={1} disabled={disabled}
+          className="flex-1 resize-none text-[11px] bg-transparent text-[#808290] placeholder-[#808290] focus:outline-none focus:text-[#f5f5f5] disabled:opacity-40 leading-[12px]"
+          style={{ maxHeight: 80 }} />
       </div>
-      <textarea ref={ref} value={val} onChange={(e) => setVal(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-        placeholder="Write a message..." rows={1} disabled={disabled}
-        className="flex-1 resize-none text-sm bg-transparent text-gray-200 placeholder-gray-600 focus:outline-none disabled:opacity-40"
-        style={{ maxHeight: 80 }} />
       <button onClick={send} disabled={!val.trim() || loading || disabled}
-        className="px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 shrink-0 flex items-center gap-1.5">
+        className="bg-[#006AE6] hover:bg-blue-500 text-[#f5f5f5] font-medium text-[14px] leading-[12px] px-[16px] py-[10px] rounded-[6px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 shrink-0 flex items-center gap-1.5">
         <SendIcon />
-        <span className="hidden sm:inline">Send</span>
+        <span>Send</span>
       </button>
     </div>
   );
@@ -487,7 +542,7 @@ export default function App() {
     setFormType(null);
   };
 
-  // ── Lead submit (Need Demo) ───────────────────────────────────────────────────
+  // ── Lead submit (Need Demo / Capture Lead Info) ───────────────────────────────
   const handleLeadSubmit = async ({ name, email }: { name: string; email: string }) => {
     setFormType(null);
     addMsg("user", "I'd like to request a demo");
@@ -536,7 +591,15 @@ export default function App() {
         return;
       }
 
-      // ── All other messages → server (FAQ + AI hybrid) ──
+      if (settings.faqs) {
+        const faqAnswer = matchLocalFAQ(text);
+        if (faqAnswer) {
+          await new Promise((r) => setTimeout(r, 500));
+          addMsg("bot", faqAnswer, "faq");
+          setLoading(false);
+          return;
+        }
+      }
       const res = await fetch("/api/chat/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -560,7 +623,7 @@ export default function App() {
   const showQuickReplies = messages.length === 1 && !loading && !chatClosed && !formType;
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-950 text-white relative">
+    <div className="h-screen flex overflow-hidden bg-[#111217] text-white relative">
 
       {/* ── Mobile sidebar overlay backdrop ── */}
       {sidebarOpen && (
@@ -583,105 +646,108 @@ export default function App() {
           onChange={toggleSetting}
           onNewChat={handleNewChat}
           onClose={() => setSidebarOpen(false)}
+          onLead={() => { setFormType("lead"); setSidebarOpen(false); }}
           onTalkToHuman={() => { setFormType("human"); setSidebarOpen(false); }}
           stats={stats}
         />
       </div>
 
       {/* ── Main Chat ── */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#0d1117]">
+      <div className="flex-1 flex flex-col min-w-0 bg-[#0d0e12]">
 
         {/* Header */}
-        <div className="px-4 sm:px-5 py-3 sm:py-3.5 border-b border-gray-800 bg-gray-900/50 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-3">
-            {/* Hamburger — mobile only */}
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="sm:hidden text-gray-400 hover:text-gray-200 transition-colors p-1 -ml-1">
-              <MenuIcon />
-            </button>
-            <div>
-              <p className="font-semibold text-white text-sm sm:text-base">Clarix</p>
-              <p className="text-xs text-gray-500">Online · Typically Replies Instantly</p>
-            </div>
+        <div className="px-[20px] py-0 flex items-center shrink-0" style={{ minHeight: 70 }}>
+          {/* Hamburger — mobile only */}
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="sm:hidden text-[#636674] hover:text-[#f5f5f5] transition-colors p-1 -ml-1 mr-3">
+            <MenuIcon />
+          </button>
+          <div className="flex-1 flex flex-col gap-[12px]">
+            <p className="font-medium text-[18px] text-[#f5f5f5] leading-[18px] tracking-[-0.18px]">Clarix</p>
+            <p className="text-[13px] text-[#9a9cae] leading-[14px]">Online - Typically Replies Instantly</p>
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-medium text-green-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="hidden sm:inline">Bot Active</span>
+          <div className="flex items-center gap-[4px] px-[10px] py-[8px] rounded-[6px]">
+            <span className="w-[6px] h-[6px] rounded-full bg-[#00af0c]" />
+            <p className="font-medium text-[12px] text-[#00af0c] leading-[12px] hidden sm:block">Bot Active</p>
           </div>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-3 sm:px-5 pt-4 sm:pt-5 pb-2">
-          {messages.map((m) => <Bubble key={m.id} msg={m} />)}
+        {/* Messages card */}
+        <div className="flex-1 min-h-0 mx-[20px] mb-[20px] bg-[#111217] border border-[#1b1c22] rounded-[12px] overflow-hidden flex flex-col">
+          <div className="flex-1 overflow-y-auto py-[20px]">
+            {messages.map((m) => <Bubble key={m.id} msg={m} />)}
 
-          {/* Quick replies in chat (Pricing + Demo only) */}
-          <ChatQuickReplies
-            settings={settings}
-            visible={showQuickReplies}
-            onFAQ={handleSend}
-            onLead={() => setFormType("lead")}
-          />
-
-          {/* Inline lead/demo form */}
-          {formType === "lead" && (
-            <InlineFormCard
-              title="Request a Demo"
-              submitLabel="Book Demo"
-              onSubmit={handleLeadSubmit}
-              onDismiss={() => setFormType(null)}
+            {/* Quick replies in chat */}
+            <ChatQuickReplies
+              settings={settings}
+              visible={showQuickReplies}
+              onFAQ={handleSend}
+              onLead={() => setFormType("lead")}
             />
-          )}
 
-          {/* Inline talk-to-human form */}
-          {formType === "human" && (
-            <InlineFormCard
-              title="Talk to a Human"
-              submitLabel="Connect Me"
-              onSubmit={handleHumanSubmit}
-              onDismiss={() => setFormType(null)}
-            />
-          )}
+            {/* Inline lead/demo form */}
+            {formType === "lead" && (
+              <InlineFormCard
+                title="Capture Lead InFo"
+                submitLabel="Book Demo"
+                onSubmit={handleLeadSubmit}
+                onDismiss={() => setFormType(null)}
+              />
+            )}
 
-          {/* Typing indicator */}
-          {loading && (
-            <div className="flex items-end gap-2 sm:gap-3 mb-3">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-violet-600 flex items-center justify-center shrink-0 text-white text-xs font-bold">
-                S
+            {/* Inline talk-to-human form */}
+            {formType === "human" && (
+              <InlineFormCard
+                title="Talk to a Human"
+                submitLabel="Connect Me"
+                onSubmit={handleHumanSubmit}
+                onDismiss={() => setFormType(null)}
+              />
+            )}
+
+            {/* Typing indicator */}
+            {loading && (
+              <div className="flex items-end gap-[14px] px-[20px] mb-[10px]">
+                <BotAvatar size={30} />
+                <div className="rounded-br-[12px] rounded-tl-[12px] rounded-tr-[12px] border"
+                  style={{ background: "#0d0e12", borderColor: "rgba(54,56,67,0.5)" }}>
+                  <TypingDots />
+                </div>
               </div>
-              <div className="bg-gray-800 border border-gray-700 rounded-2xl rounded-tl-sm">
-                <TypingDots />
-              </div>
-            </div>
-          )}
+            )}
 
-          <div ref={endRef} />
+            <div ref={endRef} />
+          </div>
         </div>
 
         {/* Message Input — or Closed Banner */}
-        {chatClosed ? (
-          <div className="px-4 py-4 border-t border-gray-800 bg-[#0d1117] flex flex-col items-center gap-3">
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-              <span>This chat session has ended. Start a new chat to continue.</span>
+        <div className="px-[20px] pb-[20px] shrink-0">
+          {chatClosed ? (
+            <div className="flex flex-col items-center gap-3 py-4">
+              <div className="flex items-center gap-2 text-xs text-[#636674]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span>This chat session has ended. Start a new chat to continue.</span>
+              </div>
+              <button
+                onClick={handleNewChat}
+                className="px-5 py-2 bg-[#006AE6] hover:bg-blue-500 text-white text-sm font-semibold rounded-lg transition-colors duration-150 active:scale-95 flex items-center gap-2">
+                <PlusIcon />
+                Start New Chat
+              </button>
             </div>
-            <button
-              onClick={handleNewChat}
-              className="px-5 py-2 bg-[#006AE6] hover:bg-[#0059c9] text-white text-sm font-semibold rounded-lg transition-colors duration-150 active:scale-95 flex items-center gap-2">
-              <PlusIcon />
-              Start New Chat
-            </button>
-          </div>
-        ) : (
-          <MessageInput onSend={handleSend} loading={loading} disabled={false} />
-        )}
-
+          ) : (
+            <MessageInput onSend={handleSend} loading={loading} disabled={false} />
+          )}
+        </div>
 
         {/* Footer */}
-        <div className="text-center text-[10px] text-gray-700 py-2 border-t border-gray-800/50">
-          Powered By Clarix AI &nbsp;•&nbsp; End to End Encrypted
+        <div className="text-center text-[14px] text-[#636674] pb-[20px] flex items-center justify-center gap-[12px] shrink-0">
+          <span>Powered By Clarix AI</span>
+          <span className="w-[6px] h-[6px] rounded-full bg-[#636674] inline-block" />
+          <span>End to End Encrypted</span>
         </div>
       </div>
     </div>
