@@ -3,7 +3,7 @@ import api from "../../api/client";
 
 // ── Palette ───────────────────────────────────────────────────────────────────
 const C = {
-  indigo: "#6366f1", violet: "#7c3aed", emerald: "#10b981",
+  indigo: "#006AE6", violet: "#7c3aed", emerald: "#10b981",
   amber: "#f59e0b", rose: "#f43f5e", sky: "#0ea5e9", gray: "#6b7280",
 };
 
@@ -82,7 +82,7 @@ const fmtDate = (iso: string) => {
 const Badge = ({ label, color }: { label: string; color: string }) => {
   const map: Record<string, string> = {
     emerald: "#064e3b:#6ee7b7", amber: "#78350f:#fcd34d", rose: "#881337:#fda4af",
-    indigo: "#312e81:#a5b4fc", sky: "#0c4a6e:#7dd3fc", gray: "#1f2937:#9ca3af", violet: "#4c1d95:#c4b5fd"
+    indigo: "#001840:#4da3ff", sky: "#0c4a6e:#7dd3fc", gray: "#1f2937:#9ca3af", violet: "#4c1d95:#c4b5fd"
   };
   const [bg, tx] = (map[color] || map.gray).split(":");
   return <span style={{ background: bg + "33", color: tx, border: `1px solid ${bg}55` }} className="px-2 py-0.5 rounded-full text-xs font-semibold">{label}</span>;
@@ -92,11 +92,11 @@ const StatCard = ({ label, value, sub, icon, color, trend }: {
   label: string; value: string | number; sub?: string;
   icon: React.ReactNode; color: string; trend?: string;
 }) => (
-  <div className="bg-gray-900 rounded-2xl p-5 border border-gray-800 flex items-start justify-between">
+  <div className="bg-[#111217] rounded-2xl p-5 border border-[#26272f] flex items-start justify-between">
     <div>
-      <p className="text-sm text-gray-400 font-medium">{label}</p>
+      <p className="text-sm text-[#9a9cae] font-medium">{label}</p>
       <p className="text-3xl font-bold text-white mt-1">{value}</p>
-      {sub && <p className="text-xs text-gray-500 mt-1">{sub}</p>}
+      {sub && <p className="text-xs text-[#636674] mt-1">{sub}</p>}
       {trend && <p className={`text-xs mt-1 font-semibold ${trend.startsWith("+") ? "text-emerald-400" : "text-rose-400"}`}>{trend} vs last week</p>}
     </div>
     <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: color + "22", color }}>
@@ -109,10 +109,10 @@ const BAR_DATA = [12, 18, 14, 22, 19, 27, 31, 24, 28, 35, 29, 38, 33, 41];
 const MiniChart = () => {
   const max = Math.max(...BAR_DATA);
   return (
-    <div className="bg-gray-900 rounded-2xl p-5 border border-gray-800">
+    <div className="bg-[#111217] rounded-2xl p-5 border border-[#26272f]">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <p className="text-sm text-gray-400 font-medium">Conversations / day</p>
+          <p className="text-sm text-[#9a9cae] font-medium">Conversations / day</p>
           <p className="text-2xl font-bold text-white mt-0.5">↑ 28%</p>
         </div>
         <Badge label="Last 14 days" color="indigo" />
@@ -124,8 +124,8 @@ const MiniChart = () => {
         ))}
       </div>
       <div className="flex justify-between mt-2">
-        <span className="text-xs text-gray-500">14 days ago</span>
-        <span className="text-xs text-gray-500">Today</span>
+        <span className="text-xs text-[#636674]">14 days ago</span>
+        <span className="text-xs text-[#636674]">Today</span>
       </div>
     </div>
   );
@@ -141,11 +141,11 @@ const DonutChart = ({ faqPct, escPct }: { faqPct: number; escPct: number }) => {
   let cum = 0;
   const r = 40, cx = 60, cy = 60, circ = 2 * Math.PI * r;
   return (
-    <div className="bg-gray-900 rounded-2xl p-5 border border-gray-800">
-      <p className="text-sm text-gray-400 font-medium mb-4">Resolution Sources</p>
+    <div className="bg-[#111217] rounded-2xl p-5 border border-[#26272f]">
+      <p className="text-sm text-[#9a9cae] font-medium mb-4">Resolution Sources</p>
       <div className="flex items-center gap-4">
         <svg width={120} height={120}>
-          <circle cx={cx} cy={cy} r={r} fill="none" stroke="#374151" strokeWidth={16} />
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="#363843" strokeWidth={16} />
           {segs.map((s, i) => {
             const offset = circ * (1 - cum / 100);
             const dash = circ * s.pct / 100;
@@ -155,14 +155,14 @@ const DonutChart = ({ faqPct, escPct }: { faqPct: number; escPct: number }) => {
               strokeDashoffset={offset} strokeLinecap="round"
               style={{ transform: "rotate(-90deg)", transformOrigin: `${cx}px ${cy}px` }} />;
           })}
-          <text x={cx} y={cy - 6} textAnchor="middle" fontSize={11} fill="#9ca3af">Sources</text>
+          <text x={cx} y={cy - 6} textAnchor="middle" fontSize={11} fill="#9a9cae">Sources</text>
           <text x={cx} y={cy + 10} textAnchor="middle" fontSize={14} fontWeight="bold" fill="#f9fafb">{faqPct}%</text>
         </svg>
         <div className="flex flex-col gap-2">
           {segs.map((s) => (
             <div key={s.label} className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: s.color }} />
-              <span className="text-xs text-gray-400">{s.label}</span>
+              <span className="text-xs text-[#9a9cae]">{s.label}</span>
               <span className="text-xs font-bold text-white ml-auto pl-3">{s.pct}%</span>
             </div>
           ))}
@@ -186,27 +186,27 @@ const TranscriptModal = ({ sessionId, onClose }: { sessionId: string; onClose: (
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.7)" }} onClick={onClose}>
-      <div className="bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-gray-700" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800">
+      <div className="bg-[#111217] rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden border border-[#363843]" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[#26272f]">
           <div>
             <p className="font-semibold text-white text-sm">Session {sessionId}</p>
-            {data && <p className="text-xs text-gray-500">{fmtDate(data.started_at)}</p>}
+            {data && <p className="text-xs text-[#636674]">{fmtDate(data.started_at)}</p>}
           </div>
           <div className="flex items-center gap-2">
             {data?.escalated && <Badge label="Escalated" color="amber" />}
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-300 ml-2">
+            <button onClick={onClose} className="text-[#636674] hover:text-[#b5b7c8] ml-2">
               <Ic d="M18 6L6 18M6 6l12 12" />
             </button>
           </div>
         </div>
         <div className="p-5 flex flex-col gap-3 max-h-80 overflow-y-auto">
-          {loading && <p className="text-center text-gray-500 text-sm py-4">Loading transcript…</p>}
+          {loading && <p className="text-center text-[#636674] text-sm py-4">Loading transcript…</p>}
           {!loading && (!data?.messages || data.messages.length === 0) && (
-            <p className="text-center text-gray-500 text-sm py-4">No messages found</p>
+            <p className="text-center text-[#636674] text-sm py-4">No messages found</p>
           )}
           {data?.messages?.map((m, i) => (
             <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm ${m.role === "user" ? "bg-indigo-600 text-white rounded-br-sm" : "bg-gray-800 text-gray-200 rounded-bl-sm"}`}>
+              <div className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm ${m.role === "user" ? "bg-[#006AE6] text-white rounded-br-sm" : "bg-[#1B1C22] text-[#f5f5f5] rounded-bl-sm"}`}>
                 {m.content}
                 {m.source && <span className="block text-[10px] mt-1 opacity-60">{m.source === "faq" ? "✓ FAQ" : "✦ AI"}</span>}
               </div>
@@ -229,32 +229,32 @@ const FAQModal = ({ faq, onSave, onClose }: {
   const [tags, setTags] = useState(faq?.tags?.join(", ") || "");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.7)" }} onClick={onClose}>
-      <div className="bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg mx-4 border border-gray-700" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+      <div className="bg-[#111217] rounded-2xl shadow-2xl w-full max-w-lg mx-4 border border-[#363843]" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#26272f]">
           <p className="font-semibold text-white">{faq ? "Edit FAQ" : "Add New FAQ"}</p>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-300"><Ic d="M18 6L6 18M6 6l12 12" /></button>
+          <button onClick={onClose} className="text-[#636674] hover:text-[#b5b7c8]"><Ic d="M18 6L6 18M6 6l12 12" /></button>
         </div>
         <div className="p-6 flex flex-col gap-4">
           <div>
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 block">Question</label>
+            <label className="text-xs font-semibold text-[#9a9cae] mb-1.5 block">Question</label>
             <input value={q} onChange={(e) => setQ(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20" />
+              className="w-full bg-[#1B1C22] border border-[#363843] rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-2 focus:ring-[#006AE6]/20" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 block">Answer</label>
+            <label className="text-xs font-semibold text-[#9a9cae] mb-1.5 block">Answer</label>
             <textarea value={a} onChange={(e) => setA(e.target.value)} rows={4}
-              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 resize-none" />
+              className="w-full bg-[#1B1C22] border border-[#363843] rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-2 focus:ring-[#006AE6]/20 resize-none" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 block">Tags (comma-separated)</label>
+            <label className="text-xs font-semibold text-[#9a9cae] mb-1.5 block">Tags (comma-separated)</label>
             <input value={tags} onChange={(e) => setTags(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20" />
+              className="w-full bg-[#1B1C22] border border-[#363843] rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-2 focus:ring-[#006AE6]/20" />
           </div>
         </div>
         <div className="px-6 pb-5 flex justify-end gap-3">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-gray-400 border border-gray-700 rounded-xl hover:bg-gray-800 transition-colors">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-[#9a9cae] border border-[#363843] rounded-xl hover:bg-[#1B1C22] transition-colors">Cancel</button>
           <button onClick={() => { if (q && a) onSave({ question: q, answer: a, tags: tags.split(",").map((t) => t.trim()).filter(Boolean) }); }}
-            className="px-5 py-2 text-sm text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 font-medium transition-colors">
+            className="px-5 py-2 text-sm text-white bg-[#006AE6] rounded-xl hover:bg-blue-500 font-medium transition-colors">
             {faq ? "Save Changes" : "Add FAQ"}
           </button>
         </div>
@@ -265,10 +265,10 @@ const FAQModal = ({ faq, onSave, onClose }: {
 
 // ── Skeleton row ──────────────────────────────────────────────────────────────
 const SkeletonRow = ({ cols }: { cols: number }) => (
-  <tr className="border-b border-gray-800">
+  <tr className="border-b border-[#26272f]">
     {Array.from({ length: cols }).map((_, i) => (
       <td key={i} className="px-4 py-4">
-        <div className="h-3 bg-gray-800 rounded animate-pulse" style={{ width: `${60 + (i % 3) * 20}%` }} />
+        <div className="h-3 bg-[#1B1C22] rounded animate-pulse" style={{ width: `${60 + (i % 3) * 20}%` }} />
       </td>
     ))}
   </tr>
@@ -415,22 +415,22 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   const escPct        = parseInt(escRate) || 0;
 
   return (
-    <div className="min-h-screen bg-gray-950 font-sans">
+    <div className="min-h-screen bg-[#0d0e12] font-sans">
       {/* ── Top Nav ── */}
-      <div className="bg-gray-900 border-b border-gray-800 px-6 py-3.5 flex items-center justify-between sticky top-0 z-40">
+      <div className="bg-[#111217] border-b border-[#1B1C22] px-6 py-3.5 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <ClarixNavLogo />
-          <span className="text-gray-700">|</span>
-          <span className="text-xs text-gray-500">Support Admin</span>
+          <span className="text-[#363843]">|</span>
+          <span className="text-xs text-[#636674]">Support Admin</span>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-            <span className="text-xs text-gray-400">Live · {liveCount} sessions today</span>
+            <span className="text-xs text-[#9a9cae]">Live · {liveCount} sessions today</span>
           </div>
           <button
             onClick={onSignOut}
-            className="text-xs font-medium text-gray-300 bg-gray-800 border border-gray-700 hover:bg-gray-700 hover:border-gray-600 transition-colors rounded-lg px-3 py-1.5 flex items-center gap-1.5"
+            className="text-xs font-medium text-[#b5b7c8] bg-[#1B1C22] border border-[#363843] hover:bg-[#26272f] hover:border-[#464852] transition-colors rounded-lg px-3 py-1.5 flex items-center gap-1.5"
           >
             <Ic d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" size={13} />
             Sign out
@@ -440,10 +440,10 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
 
       <div className="max-w-6xl mx-auto px-6 py-6">
         {/* ── Tab Bar ── */}
-        <div className="flex items-center gap-1 mb-6 bg-gray-900 rounded-xl border border-gray-800 p-1 w-fit">
+        <div className="flex items-center gap-1 mb-6 bg-[#111217] rounded-xl border border-[#1B1C22] p-1 w-fit">
           {TABS.map((t) => (
             <button key={t} onClick={() => { setTab(t); setSearch(""); }}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === t ? "bg-indigo-600 text-white" : "text-gray-400 hover:text-gray-200 hover:bg-gray-800"}`}>
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${tab === t ? "bg-[#006AE6] text-white" : "text-[#9a9cae] hover:text-[#f5f5f5] hover:bg-[#1B1C22]"}`}>
               {t}
             </button>
           ))}
@@ -467,29 +467,29 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
               <DonutChart faqPct={faqPct} escPct={escPct} />
             </div>
             {/* Recent Activity */}
-            <div className="bg-gray-900 rounded-2xl border border-gray-800">
-              <div className="px-5 py-4 border-b border-gray-800 flex items-center justify-between">
+            <div className="bg-[#111217] rounded-2xl border border-[#1B1C22]">
+              <div className="px-5 py-4 border-b border-[#26272f] flex items-center justify-between">
                 <p className="font-semibold text-white text-sm">Recent Activity</p>
-                <button onClick={() => setTab("Conversations")} className="text-xs text-indigo-400 hover:text-indigo-300 font-medium">View all →</button>
+                <button onClick={() => setTab("Conversations")} className="text-xs text-[#006AE6] hover:text-blue-400 font-medium">View all →</button>
               </div>
               {loadingData ? (
-                <div className="px-5 py-8 text-center text-gray-500 text-sm">Loading…</div>
+                <div className="px-5 py-8 text-center text-[#636674] text-sm">Loading…</div>
               ) : convos.length === 0 ? (
-                <div className="px-5 py-8 text-center text-gray-500 text-sm">No conversations yet</div>
+                <div className="px-5 py-8 text-center text-[#636674] text-sm">No conversations yet</div>
               ) : (
-                <div className="divide-y divide-gray-800">
+                <div className="divide-y divide-[#1B1C22]">
                   {convos.slice(0, 6).map((c) => (
-                    <div key={c.id} className="px-5 py-3.5 flex items-center gap-4 hover:bg-gray-800/50 cursor-pointer transition-colors" onClick={() => setSelectedSession(c.session_id)}>
-                      <div className="w-8 h-8 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+                    <div key={c.id} className="px-5 py-3.5 flex items-center gap-4 hover:bg-[#1B1C22]/50 cursor-pointer transition-colors" onClick={() => setSelectedSession(c.session_id)}>
+                      <div className="w-8 h-8 rounded-full bg-[#006AE6]/20 border border-[#006AE6]/30 flex items-center justify-center text-[#006AE6] shrink-0">
                         <Ic d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" size={14} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-200 font-mono truncate">{c.session_id}</p>
-                        <p className="text-xs text-gray-500">{fmtDate(c.started_at)}</p>
+                        <p className="text-sm text-[#f5f5f5] font-mono truncate">{c.session_id}</p>
+                        <p className="text-xs text-[#636674]">{fmtDate(c.started_at)}</p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         {c.escalated && <Badge label="Escalated" color="amber" />}
-                        <span className="text-xs text-gray-500">{fmtDate(c.started_at)}</span>
+                        <span className="text-xs text-[#636674]">{fmtDate(c.started_at)}</span>
                       </div>
                     </div>
                   ))}
@@ -504,47 +504,47 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 flex-wrap">
               <div className="relative flex-1 min-w-52">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"><Ic d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" size={15} /></span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636674]"><Ic d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" size={15} /></span>
                 <input value={search} onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by session ID…"
-                  className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20" />
+                  className="w-full pl-9 pr-4 py-2.5 bg-[#111217] border border-[#363843] rounded-xl text-sm text-white placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-2 focus:ring-[#006AE6]/20" />
               </div>
               <button onClick={() => setFilterEsc((v) => !v)}
-                className={`px-3.5 py-2.5 rounded-xl text-sm font-medium border transition-colors flex items-center gap-2 ${filterEsc ? "bg-amber-500/20 border-amber-500/40 text-amber-300" : "bg-gray-900 border-gray-700 text-gray-400 hover:bg-gray-800"}`}>
+                className={`px-3.5 py-2.5 rounded-xl text-sm font-medium border transition-colors flex items-center gap-2 ${filterEsc ? "bg-amber-500/20 border-amber-500/40 text-amber-300" : "bg-[#111217] border-[#363843] text-[#9a9cae] hover:bg-[#1B1C22]"}`}>
                 <Ic d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" size={14} /> Escalated
               </button>
-              <button onClick={fetchConversations} className="px-3.5 py-2.5 rounded-xl text-sm border bg-gray-900 border-gray-700 text-gray-400 hover:bg-gray-800 transition-colors flex items-center gap-2">
+              <button onClick={fetchConversations} className="px-3.5 py-2.5 rounded-xl text-sm border bg-[#111217] border-[#363843] text-[#9a9cae] hover:bg-[#1B1C22] transition-colors flex items-center gap-2">
                 <Ic d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" size={14} /> Refresh
               </button>
-              <span className="text-xs text-gray-500 ml-auto">{filteredConvos.length} results</span>
+              <span className="text-xs text-[#636674] ml-auto">{filteredConvos.length} results</span>
             </div>
-            <div className="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden">
+            <div className="bg-[#111217] rounded-2xl border border-[#1B1C22] overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-800 bg-gray-800/50">
+                  <tr className="border-b border-[#26272f] bg-[#1B1C22]/50">
                     {["Session", "Started", "Status", "Time", ""].map((h) => (
-                      <th key={h} className="text-xs font-semibold text-gray-400 text-left px-4 py-3">{h}</th>
+                      <th key={h} className="text-xs font-semibold text-[#9a9cae] text-left px-4 py-3">{h}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800">
+                <tbody className="divide-y divide-[#1B1C22]">
                   {loadingData && Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} cols={5} />)}
                   {!loadingData && filteredConvos.map((c) => (
-                    <tr key={c.id} className="hover:bg-indigo-600/5 transition-colors cursor-pointer" onClick={() => setSelectedSession(c.session_id)}>
-                      <td className="px-4 py-3.5 text-xs font-mono text-indigo-400 font-medium">{c.session_id}</td>
-                      <td className="px-4 py-3.5 text-sm text-gray-400">{new Date(c.started_at).toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" })}</td>
+                    <tr key={c.id} className="hover:bg-[#006AE6]/5 transition-colors cursor-pointer" onClick={() => setSelectedSession(c.session_id)}>
+                      <td className="px-4 py-3.5 text-xs font-mono text-[#006AE6] font-medium">{c.session_id}</td>
+                      <td className="px-4 py-3.5 text-sm text-[#9a9cae]">{new Date(c.started_at).toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" })}</td>
                       <td className="px-4 py-3.5">
                         <div className="flex gap-1.5">
                           {c.escalated ? <Badge label="🚨 Escalated" color="amber" /> : <Badge label="Active" color="emerald" />}
                         </div>
                       </td>
-                      <td className="px-4 py-3.5 text-xs text-gray-500 whitespace-nowrap">{fmtDate(c.started_at)}</td>
-                      <td className="px-4 py-3.5"><span className="text-xs text-indigo-400 hover:text-indigo-300 font-medium">View →</span></td>
+                      <td className="px-4 py-3.5 text-xs text-[#636674] whitespace-nowrap">{fmtDate(c.started_at)}</td>
+                      <td className="px-4 py-3.5"><span className="text-xs text-[#006AE6] hover:text-blue-400 font-medium">View →</span></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {!loadingData && filteredConvos.length === 0 && <div className="text-center py-12 text-gray-500 text-sm">No conversations found</div>}
+              {!loadingData && filteredConvos.length === 0 && <div className="text-center py-12 text-[#636674] text-sm">No conversations found</div>}
             </div>
           </div>
         )}
@@ -554,25 +554,25 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="relative flex-1 min-w-52">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"><Ic d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" size={15} /></span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#636674]"><Ic d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0" size={15} /></span>
                 <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name or email…"
-                  className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20" />
+                  className="w-full pl-9 pr-4 py-2.5 bg-[#111217] border border-[#363843] rounded-xl text-sm text-white placeholder-[#636674] focus:outline-none focus:border-[#006AE6] focus:ring-2 focus:ring-[#006AE6]/20" />
               </div>
-              <button onClick={exportCSV} className="px-4 py-2.5 bg-gray-900 border border-gray-700 text-gray-300 rounded-xl text-sm font-medium hover:bg-gray-800 flex items-center gap-2 transition-colors">
+              <button onClick={exportCSV} className="px-4 py-2.5 bg-[#111217] border border-[#363843] text-[#b5b7c8] rounded-xl text-sm font-medium hover:bg-[#1B1C22] flex items-center gap-2 transition-colors">
                 <Ic d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" size={14} /> Export CSV
               </button>
-              <span className="text-xs text-gray-500">{filteredLeads.length} leads</span>
+              <span className="text-xs text-[#636674]">{filteredLeads.length} leads</span>
             </div>
-            <div className="bg-gray-900 rounded-2xl border border-gray-800 overflow-hidden">
+            <div className="bg-[#111217] rounded-2xl border border-[#1B1C22] overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-800 bg-gray-800/50">
+                  <tr className="border-b border-[#26272f] bg-[#1B1C22]/50">
                     {["Name", "Email", "Status", "Session", "Captured", ""].map((h) => (
-                      <th key={h} className="text-xs font-semibold text-gray-400 text-left px-4 py-3">{h}</th>
+                      <th key={h} className="text-xs font-semibold text-[#9a9cae] text-left px-4 py-3">{h}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-800">
+                <tbody className="divide-y divide-[#1B1C22]">
                   {loadingData && Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} cols={6} />)}
                   {!loadingData && filteredLeads.map((l) => {
                     const st = leadStatus[l.id] || "new";
@@ -580,32 +580,32 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
                       <tr key={l.id} className="hover:bg-emerald-500/5 transition-colors">
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2.5">
-                            <div className="w-7 h-7 rounded-full bg-indigo-600/30 border border-indigo-500/30 flex items-center justify-center text-indigo-300 text-xs font-bold shrink-0">{l.name[0]}</div>
-                            <span className="text-sm font-medium text-gray-200">{l.name}</span>
+                            <div className="w-7 h-7 rounded-full bg-[#006AE6]/30 border border-[#006AE6]/30 flex items-center justify-center text-[#5aadff] text-xs font-bold shrink-0">{l.name[0]}</div>
+                            <span className="text-sm font-medium text-[#f5f5f5]">{l.name}</span>
                           </div>
                         </td>
-                        <td className="px-4 py-3.5 text-sm text-gray-400">{l.email}</td>
+                        <td className="px-4 py-3.5 text-sm text-[#9a9cae]">{l.email}</td>
                         <td className="px-4 py-3.5">
                           <select value={st} onChange={(e) => setLeadStatus((s) => ({ ...s, [l.id]: e.target.value }))}
                             onClick={(e) => e.stopPropagation()}
-                            className="text-xs bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500 cursor-pointer">
+                            className="text-xs bg-[#1B1C22] border border-[#363843] text-[#b5b7c8] rounded-lg px-2 py-1 focus:outline-none focus:border-[#006AE6] cursor-pointer">
                             {["new", "contacted", "qualified", "closed"].map((s) => (
                               <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
                             ))}
                           </select>
                         </td>
-                        <td className="px-4 py-3.5 text-xs font-mono text-indigo-400">{l.conversation_id.slice(0, 8)}…</td>
-                        <td className="px-4 py-3.5 text-xs text-gray-500 whitespace-nowrap">{fmtDate(l.submitted_at)}</td>
+                        <td className="px-4 py-3.5 text-xs font-mono text-[#006AE6]">{l.conversation_id.slice(0, 8)}…</td>
+                        <td className="px-4 py-3.5 text-xs text-[#636674] whitespace-nowrap">{fmtDate(l.submitted_at)}</td>
                         <td className="px-4 py-3.5">
                           <button onClick={() => showToast(`Email drafted for ${l.name}`)}
-                            className="text-xs bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 px-2.5 py-1 rounded-lg hover:bg-indigo-600/30 font-medium transition-colors">Contact</button>
+                            className="text-xs bg-[#006AE6]/20 border border-[#006AE6]/30 text-[#5aadff] px-2.5 py-1 rounded-lg hover:bg-[#006AE6]/30 font-medium transition-colors">Contact</button>
                         </td>
                       </tr>
                     );
                   })}
                 </tbody>
               </table>
-              {!loadingData && filteredLeads.length === 0 && <div className="text-center py-12 text-gray-500 text-sm">No leads yet</div>}
+              {!loadingData && filteredLeads.length === 0 && <div className="text-center py-12 text-[#636674] text-sm">No leads yet</div>}
             </div>
           </div>
         )}
@@ -615,42 +615,42 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <p className="text-sm text-gray-400">{faqs.filter((f) => f.active).length} active · {faqs.filter((f) => !f.active).length} inactive</p>
+                <p className="text-sm text-[#9a9cae]">{faqs.filter((f) => f.active).length} active · {faqs.filter((f) => !f.active).length} inactive</p>
                 <Badge label={`${faqs.length} FAQs`} color="indigo" />
               </div>
               <button onClick={() => setFaqModal("new")}
-                className="px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 flex items-center gap-2 transition-colors">
+                className="px-4 py-2.5 bg-[#006AE6] text-white rounded-xl text-sm font-medium hover:bg-blue-500 flex items-center gap-2 transition-colors">
                 <Ic d="M12 5v14M5 12h14" size={15} sw={2.5} /> Add FAQ
               </button>
             </div>
             {loadingData && (
-              <div className="text-center py-12 text-gray-500 text-sm">Loading FAQs…</div>
+              <div className="text-center py-12 text-[#636674] text-sm">Loading FAQs…</div>
             )}
             <div className="grid gap-3">
               {faqs.map((f) => (
-                <div key={f.id} className={`bg-gray-900 rounded-2xl border p-4 transition-all ${f.active ? "border-gray-800" : "border-gray-800 opacity-50"}`}>
+                <div key={f.id} className={`bg-[#111217] rounded-2xl border p-4 transition-all ${f.active ? "border-[#26272f]" : "border-[#1B1C22] opacity-50"}`}>
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                         <p className="text-sm font-semibold text-white">{f.question}</p>
                         {f.tags?.map((t) => (
-                          <span key={t} className="text-xs bg-gray-800 text-gray-400 border border-gray-700 px-2 py-0.5 rounded-full">{t}</span>
+                          <span key={t} className="text-xs bg-[#1B1C22] text-[#9a9cae] border border-[#363843] px-2 py-0.5 rounded-full">{t}</span>
                         ))}
                       </div>
-                      <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{f.answer}</p>
-                      <p className="text-xs text-gray-600 mt-2">Updated {fmtDate(f.updated_at)}</p>
+                      <p className="text-xs text-[#636674] line-clamp-2 leading-relaxed">{f.answer}</p>
+                      <p className="text-xs text-[#464852] mt-2">Updated {fmtDate(f.updated_at)}</p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <button onClick={() => toggleFAQ(f.id)}
-                        className={`w-9 h-5 rounded-full transition-colors relative ${f.active ? "bg-indigo-600" : "bg-gray-700"}`}>
+                        className={`w-9 h-5 rounded-full transition-colors relative ${f.active ? "bg-[#006AE6]" : "bg-[#363843]"}`}>
                         <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${f.active ? "left-4" : "left-0.5"}`} />
                       </button>
                       <button onClick={() => setFaqModal(f)}
-                        className="w-8 h-8 rounded-lg text-gray-500 hover:text-indigo-400 hover:bg-indigo-600/10 flex items-center justify-center transition-colors">
+                        className="w-8 h-8 rounded-lg text-[#636674] hover:text-[#006AE6] hover:bg-[#006AE6]/10 flex items-center justify-center transition-colors">
                         <Ic d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" size={14} />
                       </button>
                       <button onClick={() => deleteFAQ(f.id)}
-                        className="w-8 h-8 rounded-lg text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 flex items-center justify-center transition-colors">
+                        className="w-8 h-8 rounded-lg text-[#636674] hover:text-rose-400 hover:bg-rose-500/10 flex items-center justify-center transition-colors">
                         <Ic d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" size={14} />
                       </button>
                     </div>
@@ -668,7 +668,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
 
       {/* ── Toast ── */}
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-gray-800 border border-gray-700 text-white text-sm px-5 py-3 rounded-xl shadow-xl flex items-center gap-2"
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#1B1C22] border border-[#363843] text-white text-sm px-5 py-3 rounded-xl shadow-xl flex items-center gap-2"
           style={{ animation: "fadeUp .2s ease" }}>
           <Ic d="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3" size={15} /> {toast}
         </div>
