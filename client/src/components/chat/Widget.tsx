@@ -251,7 +251,7 @@ function InlineFormCard({
   };
 
   return (
-    <div className="flex items-start gap-[14px] px-[20px] mb-[10px]" style={{ animation: "fadeUp 0.2s ease" }}>
+    <div className="flex items-end gap-[14px] px-[20px] mb-[10px]" style={{ animation: "fadeUp 0.2s ease" }}>
       <BotAvatar size={30} />
       {/* Form card styled as bot bubble */}
       <div className="rounded-br-[12px] rounded-tl-[12px] rounded-tr-[12px] border overflow-hidden shadow-[0px_10px_14px_0px_rgba(15,42,81,0.03)]"
@@ -308,7 +308,7 @@ function Bubble({ msg }: { msg: ChatMessage }) {
   const timeLabel = useRelativeTime(msg.ts);
   return (
     <div
-      className={`flex items-start gap-[14px] px-[20px] mb-[10px] ${isBot ? "" : "flex-row-reverse"}`}
+      className={`flex items-end gap-[14px] px-[20px] mb-[10px] ${isBot ? "" : "flex-row-reverse"}`}
       style={{ animation: "fadeUp 0.2s ease" }}
     >
       {isBot ? (
@@ -390,11 +390,10 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
         </div>
         <div className="flex items-center gap-1">
           <button
+            onClick={onClose}
+            title="Close Sidebar"
             className="w-[28px] h-[28px] bg-[#1b1c22] rounded-full flex items-center justify-center text-[#636674] hover:text-[#f5f5f5] transition-colors">
             <ChevronLeftIcon />
-          </button>
-          <button onClick={onClose} className="sm:hidden text-[#636674] hover:text-[#9A9CAE] rounded-lg p-1 transition-colors ml-1">
-            <CloseIcon />
           </button>
         </div>
       </div>
@@ -406,7 +405,7 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
         </div>
 
         {/* FAQ row — active (highlighted) */}
-        <div className="bg-[#1b1c22] flex items-center justify-between p-[10px] rounded-[6px]">
+        <div className="flex items-center justify-between p-[10px] rounded-[6px]">
           <div className="flex gap-[10px] items-start">
             {/* home-3.svg */}
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 mt-0.5">
@@ -425,11 +424,11 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
           <div className="flex gap-[10px] items-start">
             {/* home-3.svg (dimmed for inactive state) */}
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 mt-0.5" style={{ opacity: 0.5 }}>
-              <path d="M12.55 16.0755H3.57503C3.10669 16.0805 2.64204 15.9924 2.20802 15.8163C1.77399 15.6403 1.37925 15.3798 1.04668 15.05C0.714109 14.7203 0.450336 14.3277 0.270662 13.8952C0.090989 13.4627 -0.00100804 12.9988 8.33042e-06 12.5304V8.29722C0.0097648 7.51255 0.186954 6.739 0.519724 6.02832C0.852495 5.31763 1.33318 4.68619 1.92962 4.17623L5.75145 0.877935C6.40429 0.311722 7.23946 0 8.10363 0C8.96781 0 9.80298 0.311722 10.4558 0.877935L14.2477 4.22858C14.8388 4.74639 15.3121 5.38474 15.6359 6.10072C15.9597 6.8167 16.1265 7.5937 16.125 8.37949V12.5828C16.122 13.0447 16.0273 13.5014 15.8463 13.9264C15.6652 14.3514 15.4015 14.7362 15.0704 15.0583C14.7379 15.3854 14.3441 15.6435 13.9116 15.8181C13.479 15.9926 13.0163 16.0801 12.55 16.0755ZM10.3062 14.9536H12.55C13.1902 14.9564 13.8057 14.7064 14.2627 14.2581C14.4953 14.0433 14.6817 13.7832 14.8103 13.4938C14.9389 13.2045 15.007 12.8919 15.0106 12.5753V8.37201C15.0126 7.74709 14.8801 7.12905 14.622 6.55991C14.3639 5.99078 13.9863 5.48389 13.5148 5.07372L9.71538 1.73803C9.26609 1.3511 8.69284 1.13827 8.09989 1.13827C7.50695 1.13827 6.9337 1.3511 6.48441 1.73803L2.66257 5.05128C2.19281 5.46126 1.81626 5.96706 1.55825 6.53469C1.30024 7.10231 1.16675 7.71859 1.16675 8.3421V12.5753C1.17657 13.2075 1.43463 13.8105 1.8852 14.2541C2.33578 14.6976 2.94274 14.9462 3.57503 14.9462H10.3062V14.9536ZM11.5926 12.8296C11.5926 12.6808 11.5335 12.5381 11.4283 12.4329C11.3232 12.3277 11.1805 12.2686 11.0317 12.2686H5.07085C4.92208 12.2686 4.77941 12.3277 4.67421 12.4329C4.56902 12.5381 4.50992 12.6808 4.50992 12.8296C4.50992 12.9783 4.56902 13.121 4.67421 13.2262C4.77941 13.3314 4.92208 13.3905 5.07085 13.3905H11.0541C11.1959 13.3831 11.3297 13.323 11.4293 13.222C11.529 13.121 11.5872 12.9863 11.5926 12.8445V12.8296Z" fill="#9a9cae"/>
+              <path d="M12.55 16.0755H3.57503C3.10669 16.0805 2.64204 15.9924 2.20802 15.8163C1.77399 15.6403 1.37925 15.3798 1.04668 15.05C0.714109 14.7203 0.450336 14.3277 0.270662 13.8952C0.090989 13.4627 -0.00100804 12.9988 8.33042e-06 12.5304V8.29722C0.0097648 7.51255 0.186954 6.739 0.519724 6.02832C0.852495 5.31763 1.33318 4.68619 1.92962 4.17623L5.75145 0.877935C6.40429 0.311722 7.23946 0 8.10363 0C8.96781 0 9.80298 0.311722 10.4558 0.877935L14.2477 4.22858C14.8388 4.74639 15.3121 5.38474 15.6359 6.10072C15.9597 6.8167 16.1265 7.5937 16.125 8.37949V12.5828C16.122 13.0447 16.0273 13.5014 15.8463 13.9264C15.6652 14.3514 15.4015 14.7362 15.0704 15.0583C14.7379 15.3854 14.3441 15.6435 13.9116 15.8181C13.479 15.9926 13.0163 16.0801 12.55 16.0755ZM10.3062 14.9536H12.55C13.1902 14.9564 13.8057 14.7064 14.2627 14.2581C14.4953 14.0433 14.6817 13.7832 14.8103 13.4938C14.9389 13.2045 15.007 12.8919 15.0106 12.5753V8.37201C15.0126 7.74709 14.8801 7.12905 14.622 6.55991C14.3639 5.99078 13.9863 5.48389 13.5148 5.07372L9.71538 1.73803C9.26609 1.3511 8.69284 1.13827 8.09989 1.13827C7.50695 1.13827 6.9337 1.3511 6.48441 1.73803L2.66257 5.05128C2.19281 5.46126 1.81626 5.96706 1.55825 6.53469C1.30024 7.10231 1.16675 7.71859 1.16675 8.3421V12.5753C1.17657 13.2075 1.43463 13.8105 1.8852 14.2541C2.33578 14.6976 2.94274 14.9462 3.57503 14.9462H10.3062V14.9536ZM11.5926 12.8296C11.5926 12.6808 11.5335 12.5381 11.4283 12.4329C11.3232 12.3277 11.1805 12.2686 11.0317 12.2686H5.07085C4.92208 12.2686 4.77941 12.3277 4.67421 12.4329C4.56902 12.5381 4.50992 12.6808 4.50992 12.8296C4.50992 12.9783 4.56902 13.121 4.67421 13.2262C4.77941 13.3314 4.92208 13.3905 5.07085 13.3905H11.0541C11.1959 13.3831 11.3297 13.323 11.4293 13.222C11.529 13.121 11.5872 12.9863 11.5926 12.8445V12.8296Z" fill="#F5F5F5"/>
             </svg>
             <div className="flex flex-col gap-[4px]">
-              <p className="font-medium text-[14px] text-[#9a9cae] leading-[14px]">Lead Capture</p>
-              <p className="text-[12px] text-[#9a9cae] leading-[14px]">Collect Contact Details</p>
+              <p className="font-medium text-[14px] text-[#f5f5f5] leading-[14px]">Lead Capture</p>
+              <p className="text-[12px] text-[#f5f5f5] leading-[14px]">Collect Contact Details</p>
             </div>
           </div>
           <Toggle checked={settings.leads} onChange={() => onChange("leads")} />
@@ -479,7 +478,7 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
 
         {/* New chat button */}
         <button
-          onClick={() => { onNewChat(); onClose(); }}
+          onClick={() => { onNewChat(); }}
           className="w-full bg-[#1f212a] border border-[#363843] flex items-center justify-center gap-[4px] px-[10px] py-[9px] rounded-[6px] transition-colors hover:bg-[#26272f] hover:border-[#464852] active:scale-[0.98]">
           {/* plus-squared.svg */}
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -490,7 +489,7 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
 
         {/* Capture Lead Info button */}
         <button
-          onClick={() => { onLead(); onClose(); }}
+          onClick={() => { onLead(); }}
           className="w-full bg-[#006AE6] hover:bg-blue-500 flex items-center justify-center gap-[4px] px-[10px] py-[9px] rounded-[6px] transition-colors active:scale-[0.98]">
           <NoteIcon />
           <p className="font-medium text-[12px] text-[#f5f5f5] leading-[12px]">Capture Lead InFo</p>
@@ -500,18 +499,17 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
 
       {/* ── Bottom bar ── */}
       <div className="pb-[7px] pl-[25px] pr-[15px] flex items-center justify-between shrink-0">
-        <button
-          onClick={() => { onTalkToHuman(); onClose(); }}
-          title="Capture Lead InFo"
-          className="w-[32px] h-[32px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center overflow-hidden text-gray-600 hover:opacity-80 transition-opacity">
+        <div
+          title="Profile"
+          className="w-[32px] h-[32px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center overflow-hidden text-gray-600 cursor-default">
           <UserIcon />
-        </button>
+        </div>
         {/* notification-on.svg — p-[10px] rounded-[6px] container per Figma node 1327-346 */}
-        <button
+        <div
           title="Notifications"
-          className="flex items-center justify-center p-[10px] rounded-[6px] text-[#636674] hover:bg-[#1b1c22] hover:text-[#f5f5f5] transition-colors">
+          className="flex items-center justify-center p-[10px] rounded-[6px] text-[#636674]">
           <BellIcon />
-        </button>
+        </div>
       </div>
 
     </div>
@@ -536,13 +534,10 @@ function MessageInput({ onSend, loading, disabled }: {
   return (
     <div className="bg-[#1f212a] border border-[#26272f] rounded-[6px] mx-0 flex items-center justify-between px-[10px] py-[8px] gap-[10px]">
       <div className="flex items-center gap-[10px] flex-1 min-w-0">
-        <div className="w-[30px] h-[30px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center shrink-0 overflow-hidden text-gray-600">
-          <UserIcon />
-        </div>
         <textarea ref={ref} value={val} onChange={(e) => setVal(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
           placeholder="Write a message..." rows={1} disabled={disabled}
-          className="flex-1 resize-none text-[11px] bg-transparent text-[#808290] placeholder-[#808290] focus:outline-none focus:text-[#f5f5f5] disabled:opacity-40 leading-[12px]"
+          className="flex-1 resize-none text-[14px] bg-transparent text-[#808290] placeholder-[#808290] focus:outline-none focus:text-[#f5f5f5] disabled:opacity-40 leading-[20px] my-[5px]"
           style={{ maxHeight: 80 }} />
       </div>
       <button onClick={send} disabled={!val.trim() || loading || disabled}
@@ -564,7 +559,7 @@ export default function App() {
   const [loading,     setLoading]     = useState(false);
   const [chatClosed,  setChatClosed]  = useState(false);
   const [formType,    setFormType]    = useState<"lead" | "human" | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= 640);
   const [stats,       setStats]       = useState<{ sessions: number; csat: number }>({ sessions: 0, csat: 94 });
   const endRef = useRef<HTMLDivElement>(null);
   const idRef  = useRef(1);
@@ -579,10 +574,10 @@ export default function App() {
       .catch(() => {});
   }, []);
 
-  // Close sidebar on resize to desktop
+  // Sync sidebar open state with window resize (desktop=open, mobile=closed defaults)
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 640px)");
-    const handler = (e: MediaQueryListEvent) => { if (e.matches) setSidebarOpen(false); };
+    const handler = (e: MediaQueryListEvent) => setSidebarOpen(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
@@ -696,21 +691,29 @@ export default function App() {
         />
       )}
 
-      {/* ── Sidebar — always visible on sm+, drawer on mobile ── */}
+      {/* ── Sidebar — responsive drawer ── */}
       <div className={`
         fixed sm:relative inset-y-0 left-0 z-30
-        transform transition-transform duration-300 ease-in-out
-        sm:transform-none sm:translate-x-0
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-        sm:flex shrink-0
+        transform transition-all duration-300 ease-in-out
+        ${sidebarOpen ? "translate-x-0 sm:ml-0" : "-translate-x-full sm:-ml-[270px]"}
+        flex shrink-0
       `}>
         <Sidebar
           settings={settings}
           onChange={toggleSetting}
-          onNewChat={handleNewChat}
+          onNewChat={() => {
+            handleNewChat();
+            if (window.innerWidth < 640) setSidebarOpen(false);
+          }}
           onClose={() => setSidebarOpen(false)}
-          onLead={() => { setFormType("lead"); setSidebarOpen(false); }}
-          onTalkToHuman={() => { setFormType("human"); setSidebarOpen(false); }}
+          onLead={() => { 
+            setFormType("lead"); 
+            if (window.innerWidth < 640) setSidebarOpen(false); 
+          }}
+          onTalkToHuman={() => { 
+            setFormType("human"); 
+            if (window.innerWidth < 640) setSidebarOpen(false); 
+          }}
           stats={stats}
         />
       </div>
@@ -720,15 +723,19 @@ export default function App() {
 
         {/* Header */}
         <div className="px-[20px] py-0 flex items-center shrink-0" style={{ minHeight: 70 }}>
-          {/* Hamburger — mobile only */}
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="sm:hidden text-[#636674] hover:text-[#f5f5f5] transition-colors p-1 -ml-1 mr-3">
-            <MenuIcon />
-          </button>
+          {/* Hamburger (when sidebar is hidden) */}
+          {!sidebarOpen && (
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="text-[#636674] hover:text-[#f5f5f5] transition-colors p-1 -ml-1 mr-3">
+              <MenuIcon />
+            </button>
+          )}
           <div className="flex-1 flex items-center gap-[12px]">
-            {/* OBJECTS.svg bot avatar in chat header */}
-            <BotAvatar size={38} />
+            {/* Clarix icon in chat header */}
+            {/* <div className="w-[34px] h-[34px] flex items-center justify-center"> */}
+              {/* <ClarixIcon /> */}
+            {/* </div> */}
             <div className="flex flex-col gap-[5px]">
               <p className="font-medium text-[18px] text-[#f5f5f5] leading-[18px] tracking-[-0.18px]">Clarix</p>
               <p className="text-[13px] text-[#9a9cae] leading-[14px]">Online - Typically Replies Instantly</p>
