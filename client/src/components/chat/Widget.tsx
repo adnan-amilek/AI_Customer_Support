@@ -383,8 +383,10 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
     <div className="w-[270px] bg-[#111217] flex flex-col h-full overflow-hidden shrink-0">
 
       {/* ── Header ── */}
-      <div className="h-[70px] px-[15px] flex items-center shrink-0">
+      <div className="h-[70px] px-[15px] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-[8px]">
         <ClarixIcon />
+          <p className="font-medium text-[18px] text-white leading-[18px] tracking-[-0.18px]">Clarix</p>
       </div>
         <div className="flex items-center gap-1">
           <button
@@ -735,9 +737,13 @@ export default function App() {
             </button>
           )}
           <div className="flex-1 flex items-center gap-[12px]">
-            <ClarixIcon />
-            <div className="flex flex-col gap-[1px]">
-              <p className="text-[14px] text-[#9a9cae] leading-[14px]">Typically Replies Instantly</p>
+            {/* Clarix icon in chat header */}
+            {/* <div className="w-[34px] h-[34px] flex items-center justify-center"> */}
+              {/* <ClarixIcon /> */}
+            {/* </div> */}
+            <div className="flex flex-col gap-[5px]">
+              <p className="font-medium text-[18px] text-[#f5f5f5] leading-[18px] tracking-[-0.18px]">Clarix</p>
+              <p className="text-[13px] text-[#9a9cae] leading-[14px]">Online - Typically Replies Instantly</p>
             </div>
           </div>
           <div className="flex items-center gap-[4px] px-[10px] py-[8px] rounded-[6px]">
