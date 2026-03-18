@@ -384,10 +384,9 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
 
       {/* ── Header ── */}
       <div className="h-[70px] px-[15px] flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-[8px]">
-        <ClarixIcon />
-          <p className="font-medium text-[18px] text-white leading-[18px] tracking-[-0.18px]">Clarix</p>
-      </div>
+        <div className="flex items-center">
+          <ClarixLogo />
+        </div>
         <div className="flex items-center gap-1">
           <button
             onClick={onClose}
