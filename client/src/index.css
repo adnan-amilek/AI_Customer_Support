@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html, body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Force Inter on the default Tailwind font-sans class */
+.font-sans {
+  font-family: "Inter", system-ui, -apple-system, sans-serif !important;
+}
+
 /* ── Custom Scrollbar ─────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 11px;

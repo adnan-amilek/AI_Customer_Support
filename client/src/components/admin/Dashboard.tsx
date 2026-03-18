@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react"; // Applying Inter font update
 import api from "../../api/client";
 
 // ── Palette ───────────────────────────────────────────────────────────────────

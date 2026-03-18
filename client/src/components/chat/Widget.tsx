@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react"; // Applying Inter font update
 
 // ── Session ID ────────────────────────────────────────────────────────────────
 const SESSION_KEY = "ai_support_session_id";
@@ -534,6 +534,11 @@ function MessageInput({ onSend, loading, disabled }: {
   return (
     <div className="bg-[#1f212a] border border-[#26272f] rounded-[6px] mx-0 flex items-center justify-between px-[10px] py-[8px] gap-[10px]">
       <div className="flex items-center gap-[10px] flex-1 min-w-0">
+        <div
+          title="Profile"
+          className="w-[32px] h-[32px] rounded-full bg-[#f9f9f9] border border-[#99a1b7] flex items-center justify-center overflow-hidden text-gray-600 cursor-default">
+          <UserIcon />
+        </div>
         <textarea ref={ref} value={val} onChange={(e) => setVal(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
           placeholder="Write a message..." rows={1} disabled={disabled}
@@ -541,8 +546,8 @@ function MessageInput({ onSend, loading, disabled }: {
           style={{ maxHeight: 80 }} />
       </div>
       <button onClick={send} disabled={!val.trim() || loading || disabled}
-        className="bg-[#006AE6] hover:bg-blue-500 text-[#f5f5f5] font-medium text-[14px] leading-[12px] px-[16px] py-[10px] rounded-[6px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 shrink-0 flex items-center gap-1.5">
-        <SendIcon />
+        className="bg-[#006AE6] hover:bg-blue-500 text-[#f5f5f5] font-medium text-[14px] leading-[12px] px-[16px] py-[10px] rounded-[6px] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 shrink-0 flex items-center gap-1.5 h-[32px] w-[67px]">
+        {/* <SendIcon /> */}
         <span>Send</span>
       </button>
     </div>
@@ -681,7 +686,7 @@ export default function App() {
   const showQuickReplies = messages.length === 1 && !loading && !chatClosed && !formType;
 
   return (
-    <div className="h-screen flex overflow-hidden bg-[#111217] text-white relative">
+    <div className="h-screen flex overflow-hidden bg-[#111217] text-white relative font-sans">
 
       {/* ── Mobile sidebar overlay backdrop ── */}
       {sidebarOpen && (
@@ -764,7 +769,7 @@ export default function App() {
             {formType === "lead" && (
               <InlineFormCard
                 title="Capture Lead InFo"
-                submitLabel="Book Demo"
+                submitLabel="Submit"
                 onSubmit={handleLeadSubmit}
                 onDismiss={() => setFormType(null)}
               />
