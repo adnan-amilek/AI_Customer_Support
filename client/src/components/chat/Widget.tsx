@@ -256,7 +256,7 @@ function InlineFormCard({
       {/* Form card styled as bot bubble */}
       <div className="rounded-br-[12px] rounded-tl-[12px] rounded-tr-[12px] border overflow-hidden shadow-[0px_10px_14px_0px_rgba(15,42,81,0.03)]"
         style={{ background: "#0d0e12", borderColor: "#26272f" }}>
-        <div className="p-[16px] flex flex-col gap-[16px] min-w-[320px] max-w-[420px]">
+        <div className="p-[16px] flex flex-col justify-between w-[432px] h-[236px]">
           {/* Header */}
           <div className="flex flex-col gap-[12px]">
             <div className="flex items-center justify-between">
@@ -383,11 +383,9 @@ function Sidebar({ settings, onChange, onNewChat, onClose, onLead, onTalkToHuman
     <div className="w-[270px] bg-[#111217] flex flex-col h-full overflow-hidden shrink-0">
 
       {/* ── Header ── */}
-      <div className="h-[70px] px-[15px] flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-[8px]">
-          <ClarixIcon />
-          <p className="font-medium text-[18px] text-white leading-[18px] tracking-[-0.18px]">Clarix</p>
-        </div>
+      <div className="h-[70px] px-[15px] flex items-center shrink-0">
+        <ClarixIcon />
+      </div>
         <div className="flex items-center gap-1">
           <button
             onClick={onClose}
@@ -737,13 +735,9 @@ export default function App() {
             </button>
           )}
           <div className="flex-1 flex items-center gap-[12px]">
-            {/* Clarix icon in chat header */}
-            {/* <div className="w-[34px] h-[34px] flex items-center justify-center"> */}
-              {/* <ClarixIcon /> */}
-            {/* </div> */}
-            <div className="flex flex-col gap-[5px]">
-              <p className="font-medium text-[18px] text-[#f5f5f5] leading-[18px] tracking-[-0.18px]">Clarix</p>
-              <p className="text-[13px] text-[#9a9cae] leading-[14px]">Online - Typically Replies Instantly</p>
+            <ClarixIcon />
+            <div className="flex flex-col gap-[1px]">
+              <p className="text-[14px] text-[#9a9cae] leading-[14px]">Typically Replies Instantly</p>
             </div>
           </div>
           <div className="flex items-center gap-[4px] px-[10px] py-[8px] rounded-[6px]">
