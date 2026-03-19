@@ -53,12 +53,26 @@ app.post("/api/admin/login", validate(loginSchema), (req, res) => {
     password === (process.env.ADMIN_PASSWORD ?? "admin123")
   ) {
     const secret = process.env.ADMIN_JWT_SECRET ?? "dev-secret";
-    const token = jwt.sign({ email }, secret, { expiresIn: "24h" });
+    const token = jwt.sign({ email }, secret, { expiresIn: "7d" });
     logger.info({ email }, "Admin login successful");
     return res.json({ token });
   }
   logger.warn({ email }, "Admin login failed");
   return res.status(401).json({ error: "Invalid credentials" });
+});
+
+// ── Admin token refresh ────────────────────────────────────────────────────────
+app.post("/api/admin/refresh", (req, res) => {
+  const auth = req.headers.authorization;
+  if (!auth?.startsWith("Bearer ")) return res.status(401).json({ error: "No token" });
+  const secret = process.env.ADMIN_JWT_SECRET ?? "dev-secret";
+  try {
+    const payload = jwt.verify(auth.slice(7), secret) as { email: string };
+    const token = jwt.sign({ email: payload.email }, secret, { expiresIn: "7d" });
+    return res.json({ token });
+  } catch {
+    return res.status(401).json({ error: "Invalid token" });
+  }
 });
 
 // ── Gemini connectivity test (dev only) ───────────────────────────────────────

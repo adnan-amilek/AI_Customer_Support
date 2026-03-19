@@ -2,7 +2,7 @@ import { Router } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { adminLimiter } from "../middleware/rateLimiter.js";
 import { validate, faqSchema } from "../middleware/validate.js";
-import { supabase, mem } from "../db/supabase.js";
+import { supabase, mem, DEFAULT_SYSTEM_PROMPT } from "../db/supabase.js";
 import { invalidateFAQCache } from "../services/faqService.js";
 import { logger } from "../middleware/logger.js";
 import { randomUUID } from "node:crypto";
@@ -211,6 +211,33 @@ adminRouter.delete("/faqs/:id", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+// ── Bot Settings ──────────────────────────────────────────────────────────────
+adminRouter.get("/bot-settings", (_req, res) => {
+  res.json({
+    systemPrompt: mem.settings.systemPrompt || DEFAULT_SYSTEM_PROMPT,
+    isCustom: !!mem.settings.systemPrompt,
+  });
+});
+
+adminRouter.put("/bot-settings", (req, res) => {
+  const { systemPrompt } = req.body;
+  if (typeof systemPrompt !== "string") {
+    return res.status(400).json({ error: "systemPrompt must be a string" });
+  }
+  mem.settings.systemPrompt = systemPrompt.trim();
+  logger.info("Bot system prompt updated");
+  res.json({
+    systemPrompt: mem.settings.systemPrompt || DEFAULT_SYSTEM_PROMPT,
+    isCustom: !!mem.settings.systemPrompt,
+  });
+});
+
+adminRouter.delete("/bot-settings/reset", (_req, res) => {
+  mem.settings.systemPrompt = "";
+  logger.info("Bot system prompt reset to default");
+  res.json({ systemPrompt: DEFAULT_SYSTEM_PROMPT, isCustom: false });
 });
 
 // ── Analytics ─────────────────────────────────────────────────────────────────

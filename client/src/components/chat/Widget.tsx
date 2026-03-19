@@ -121,30 +121,8 @@ const VerifyBadge = () => (
 );
 
 // ── Local FAQ Knowledge Base ───────────────────────────────────────────────────
-const FAQS = [
-  { q: "pricing", a: "We offer three plans:\n• **Starter** — $29/mo (up to 3 users)\n• **Pro** — $79/mo (unlimited users + analytics)\n• **Enterprise** — Custom pricing with SLA\n\nAll plans include a 14-day free trial, no credit card required." },
-  { q: "demo",    a: "Absolutely! Our team offers live 30-minute demos tailored to your use case. Book directly at **demo.clarix.qa.team** or leave your email and we'll reach out within 24 hours." },
-  { q: "integrations", a: "We integrate with 50+ tools including **Slack, HubSpot, Salesforce, Zapier, Google Workspace**, and more. We also offer a REST API + webhooks for custom integrations." },
-  { q: "trial",   a: "Yes! Every plan starts with a **14-day free trial** — full access, no credit card required. You can upgrade, downgrade, or cancel anytime from your dashboard." },
-  { q: "support", a: "We offer:\n• **Live chat** (Pro+): Mon–Fri, 9am–6pm EST\n• **Email**: clarix@qa.team (24h response)\n• **Help Center**: docs.clarix.qa.team\n• **Enterprise**: Dedicated success manager" },
-  { q: "security", a: "Security is our top priority. We're **SOC 2 Type II certified**, GDPR compliant, use AES-256 encryption at rest and TLS 1.3 in transit. Hosted on AWS us-east-1 with daily backups." },
-  { q: "cancel",  a: "Cancel anytime from **Settings → Billing** with one click. No fees. Your data is exportable for 30 days after cancellation." },
-];
-
-function matchLocalFAQ(input: string): string | null {
-  const q = input.toLowerCase();
-  const map = [
-    { keys: ["pric", "cost", "plan", "subscri", "how much", "fee"],          idx: 0 },
-    { keys: ["demo", "walkthrough", "tour", "show me", "see it"],            idx: 1 },
-    { keys: ["integrat", "connect", "zapier", "slack", "salesforce", "api"], idx: 2 },
-    { keys: ["trial", "free", "try"],                                         idx: 3 },
-    { keys: ["support", "help", "contact", "reach"],                          idx: 4 },
-    { keys: ["secur", "gdpr", "compli", "encrypt", "safe", "data"],          idx: 5 },
-    { keys: ["cancel", "stop", "unsubscri", "refund"],                        idx: 6 },
-  ];
-  for (const { keys, idx } of map) {
-    if (keys.some((k) => q.includes(k))) return FAQS[idx].a;
-  }
+function matchLocalFAQ(_input: string): string | null {
+  // All FAQ matching is handled server-side with the full 64-entry ecommerce knowledge base
   return null;
 }
 
@@ -351,8 +329,10 @@ function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
   visible: boolean;
 }) {
   const buttons = [
-    { label: "💰  Give Me Pricing Details", gate: "faqs"  as keyof Settings, action: () => onFAQ("What are your pricing plans?") },
-    { label: "🎯  Need Demo",               gate: "leads" as keyof Settings, action: onLead },
+    { label: "🚚  Shipping & Delivery Info", gate: "faqs"  as keyof Settings, action: () => onFAQ("How much does shipping cost?") },
+    { label: "🔄  Returns & Refunds",        gate: "faqs"  as keyof Settings, action: () => onFAQ("What is your return policy?") },
+    { label: "📦  Track My Order",           gate: "faqs"  as keyof Settings, action: () => onFAQ("How do I track my order?") },
+    { label: "💳  Payment Options",          gate: "leads" as keyof Settings, action: () => onFAQ("What payment methods do you accept?") },
   ].filter((b) => settings[b.gate]);
 
   if (!visible || buttons.length === 0) return null;

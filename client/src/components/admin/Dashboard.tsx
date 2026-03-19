@@ -275,7 +275,7 @@ const SkeletonRow = ({ cols }: { cols: number }) => (
 );
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
-const TABS = ["Overview", "Conversations", "Leads", "FAQ Manager"];
+const TABS = ["Overview", "Conversations", "Leads", "FAQ Manager", "Bot Settings"];
 
 export default function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
   const [tab,      setTab]      = useState("Overview");
@@ -294,6 +294,15 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   const [faqModal,  setFaqModal]   = useState<null | "new" | ApiFAQ>(null);
   const [leadStatus, setLeadStatus] = useState<Record<string, string>>({});
   const [toast,    setToast]       = useState<string | null>(null);
+  // ── Bot Settings state ────────────────────────────────────────────────────
+  const [botPrompt,    setBotPrompt]    = useState("");
+  const [botPromptOrig, setBotPromptOrig] = useState("");
+  const [botIsCustom,  setBotIsCustom]  = useState(false);
+  const [botSaving,    setBotSaving]    = useState(false);
+  // ── Conversation filters ──────────────────────────────────────────────────
+  const [filterFrom,   setFilterFrom]   = useState("");
+  const [filterTo,     setFilterTo]     = useState("");
+  const [filterSource, setFilterSource] = useState("");
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 2500); };
 
@@ -316,12 +325,14 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
     try {
       const params: Record<string, string> = { limit: "50" };
       if (filterEsc) params.escalated = "true";
+      if (filterFrom) params.from = new Date(filterFrom).toISOString();
+      if (filterTo)   params.to   = new Date(filterTo + "T23:59:59").toISOString();
       const { data } = await api.get("/admin/conversations", { params });
       setConvos(data.data ?? []);
       setLiveCount(data.total ?? 0);
     } catch { setConvos([]); }
     finally { setLoadingData(false); }
-  }, [filterEsc]);
+  }, [filterEsc, filterFrom, filterTo]);
 
   const fetchLeads = useCallback(async () => {
     setLoadingData(true);
@@ -341,19 +352,54 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
     finally { setLoadingData(false); }
   }, []);
 
+  const fetchBotSettings = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const { data } = await api.get("/admin/bot-settings");
+      setBotPrompt(data.systemPrompt);
+      setBotPromptOrig(data.systemPrompt);
+      setBotIsCustom(data.isCustom);
+    } catch { /* keep previous */ }
+    finally { setLoadingData(false); }
+  }, []);
+
+  const saveBotSettings = async () => {
+    setBotSaving(true);
+    try {
+      const { data } = await api.put("/admin/bot-settings", { systemPrompt: botPrompt });
+      setBotPromptOrig(data.systemPrompt);
+      setBotIsCustom(data.isCustom);
+      showToast("Bot settings saved — active immediately");
+    } catch { showToast("Failed to save bot settings"); }
+    finally { setBotSaving(false); }
+  };
+
+  const resetBotSettings = async () => {
+    setBotSaving(true);
+    try {
+      const { data } = await api.delete("/admin/bot-settings/reset");
+      setBotPrompt(data.systemPrompt);
+      setBotPromptOrig(data.systemPrompt);
+      setBotIsCustom(false);
+      showToast("Reset to default system prompt");
+    } catch { showToast("Failed to reset"); }
+    finally { setBotSaving(false); }
+  };
+
   // ── Fetch on tab/filter change ────────────────────────────────────────────
   useEffect(() => {
-    if (tab === "Overview")        fetchOverview();
+    if (tab === "Overview")          fetchOverview();
     else if (tab === "Conversations") fetchConversations();
-    else if (tab === "Leads")      fetchLeads();
-    else if (tab === "FAQ Manager") fetchFAQs();
-  }, [tab, fetchOverview, fetchConversations, fetchLeads, fetchFAQs]);
+    else if (tab === "Leads")        fetchLeads();
+    else if (tab === "FAQ Manager")  fetchFAQs();
+    else if (tab === "Bot Settings") fetchBotSettings();
+  }, [tab, fetchOverview, fetchConversations, fetchLeads, fetchFAQs, fetchBotSettings]);
 
   useEffect(() => {
     if (tab === "Conversations") fetchConversations();
-  }, [filterEsc, tab, fetchConversations]);
+  }, [filterEsc, filterFrom, filterTo, tab, fetchConversations]);
 
-  // ── Client-side filter for search ─────────────────────────────────────────
+  // ── Client-side filter for search + source ────────────────────────────────
   const filteredConvos = useMemo(() =>
     convos.filter((c) => !search || c.session_id.includes(search)),
     [convos, search]
@@ -513,6 +559,25 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
                 className={`px-3.5 py-2.5 rounded-xl text-sm font-medium border transition-colors flex items-center gap-2 ${filterEsc ? "bg-amber-500/20 border-amber-500/40 text-amber-300" : "bg-[#111217] border-[#363843] text-[#9a9cae] hover:bg-[#1B1C22]"}`}>
                 <Ic d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" size={14} /> Escalated
               </button>
+              {/* ── Date filters ── */}
+              <div className="flex items-center gap-1.5">
+                <input type="date" value={filterFrom} onChange={(e) => setFilterFrom(e.target.value)}
+                  className="px-2.5 py-2 bg-[#111217] border border-[#363843] rounded-xl text-xs text-[#9a9cae] focus:outline-none focus:border-[#006AE6] [color-scheme:dark]" />
+                <span className="text-xs text-[#636674]">→</span>
+                <input type="date" value={filterTo} onChange={(e) => setFilterTo(e.target.value)}
+                  className="px-2.5 py-2 bg-[#111217] border border-[#363843] rounded-xl text-xs text-[#9a9cae] focus:outline-none focus:border-[#006AE6] [color-scheme:dark]" />
+                {(filterFrom || filterTo) && (
+                  <button onClick={() => { setFilterFrom(""); setFilterTo(""); }} className="text-xs text-[#636674] hover:text-rose-400 px-1">✕</button>
+                )}
+              </div>
+              {/* ── Source filter ── */}
+              <select value={filterSource} onChange={(e) => setFilterSource(e.target.value)}
+                className="px-3 py-2.5 bg-[#111217] border border-[#363843] rounded-xl text-xs text-[#9a9cae] focus:outline-none focus:border-[#006AE6] cursor-pointer">
+                <option value="">All sources</option>
+                <option value="faq">FAQ Match</option>
+                <option value="faq+ai">FAQ + AI</option>
+                <option value="llm">AI (LLM)</option>
+              </select>
               <button onClick={fetchConversations} className="px-3.5 py-2.5 rounded-xl text-sm border bg-[#111217] border-[#363843] text-[#9a9cae] hover:bg-[#1B1C22] transition-colors flex items-center gap-2">
                 <Ic d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" size={14} /> Refresh
               </button>
@@ -657,6 +722,79 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+        {/* ── BOT SETTINGS ── */}
+        {tab === "Bot Settings" && (
+          <div className="flex flex-col gap-5 max-w-3xl">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-white font-semibold">System Prompt</p>
+                <p className="text-xs text-[#636674] mt-0.5">This is the full instruction set sent to the AI on every conversation. Edit carefully.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {botIsCustom && (
+                  <Badge label="Custom" color="indigo" />
+                )}
+                <button onClick={resetBotSettings} disabled={botSaving || !botIsCustom}
+                  className="px-3.5 py-2 text-xs border border-[#363843] text-[#9a9cae] rounded-xl hover:bg-[#1B1C22] disabled:opacity-40 transition-colors">
+                  Reset to Default
+                </button>
+                <button onClick={saveBotSettings} disabled={botSaving || botPrompt === botPromptOrig}
+                  className="px-4 py-2 text-xs bg-[#006AE6] text-white rounded-xl hover:bg-blue-500 disabled:opacity-40 font-medium transition-colors flex items-center gap-1.5">
+                  {botSaving ? "Saving…" : <><Ic d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2zM17 21v-8H7v8M7 3v5h8" size={13} /> Save & Apply</>}
+                </button>
+              </div>
+            </div>
+
+            {/* Info banner */}
+            <div className="bg-[#006AE6]/10 border border-[#006AE6]/30 rounded-xl px-4 py-3 flex items-start gap-3">
+              <Ic d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" size={16} />
+              <div className="text-xs text-[#9a9cae] leading-relaxed">
+                <span className="text-white font-medium">Changes apply immediately</span> — no server restart needed. The bot will use this prompt for all new messages. FAQs are matched separately and injected as context above this prompt.
+              </div>
+            </div>
+
+            {/* Textarea */}
+            <div className="bg-[#111217] rounded-2xl border border-[#26272f] overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#1B1C22] bg-[#0d0e12]">
+                <span className="text-xs text-[#636674] font-mono">system_prompt.txt</span>
+                <span className="text-xs text-[#464852]">{botPrompt.length} chars</span>
+              </div>
+              {loadingData ? (
+                <div className="p-6 text-center text-[#636674] text-sm">Loading…</div>
+              ) : (
+                <textarea
+                  value={botPrompt}
+                  onChange={(e) => setBotPrompt(e.target.value)}
+                  rows={24}
+                  className="w-full bg-transparent px-5 py-4 text-sm text-[#f5f5f5] font-mono resize-none focus:outline-none placeholder-[#636674] leading-relaxed"
+                  placeholder="Enter system prompt…"
+                  spellCheck={false}
+                />
+              )}
+            </div>
+
+            {/* Section labels guide */}
+            <div className="bg-[#111217] rounded-2xl border border-[#1B1C22] p-4">
+              <p className="text-xs font-semibold text-[#9a9cae] mb-3">Prompt Sections Guide</p>
+              <div className="grid grid-cols-2 gap-2 text-xs text-[#636674]">
+                {[
+                  ["KNOWLEDGE BASE:", "Store policies, shipping, returns, payments"],
+                  ["ORDERS & TRACKING:", "How customers check order status"],
+                  ["SHIPPING:", "Delivery options and costs"],
+                  ["RETURNS & REFUNDS:", "Return window and refund process"],
+                  ["PAYMENTS:", "Accepted methods and security"],
+                  ["BEHAVIOR RULES:", "Tone, length, off-topic handling (keep STRICT rule)"],
+                ].map(([sec, desc]) => (
+                  <div key={sec} className="flex gap-2">
+                    <span className="text-[#006AE6] font-mono shrink-0">{sec}</span>
+                    <span>{desc}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
