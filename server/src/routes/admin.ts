@@ -77,7 +77,7 @@ adminRouter.get("/leads", async (req, res, next) => {
       let query = supabase
         .from("leads")
         .select("*", { count: "exact" })
-        .order("submitted_at", { ascending: false })
+        .order("created_at", { ascending: false })
         .range(from, from + limit - 1);
 
       if (req.query.search) {
@@ -243,13 +243,32 @@ adminRouter.delete("/bot-settings/reset", (_req, res) => {
 // ── Analytics ─────────────────────────────────────────────────────────────────
 adminRouter.get("/analytics", async (_req, res, next) => {
   try {
+    const now = new Date();
+    const fourteenDaysAgo = new Date(now.getTime() - 13 * 24 * 60 * 60 * 1000);
+    fourteenDaysAgo.setHours(0, 0, 0, 0);
+
+    const computeTrend = (data: number[]) => {
+      const currentWeek = data.slice(7, 14).reduce((a, b) => a + b, 0);
+      const prevWeek = data.slice(0, 7).reduce((a, b) => a + b, 0);
+      return prevWeek === 0 ? (currentWeek > 0 ? 100 : 0) : Math.round(((currentWeek - prevWeek) / prevWeek) * 100);
+    };
+
     if (supabase) {
-      const [convos, leads, escalated, faqMessages] = await Promise.all([
+      const [convos, leads, escalated, faqMessages, recentConvos] = await Promise.all([
         supabase.from("conversations").select("id", { count: "exact", head: true }),
         supabase.from("leads").select("id", { count: "exact", head: true }),
         supabase.from("conversations").select("id", { count: "exact", head: true }).eq("escalated", true),
         supabase.from("messages").select("id", { count: "exact", head: true }).eq("source", "faq"),
+        supabase.from("conversations").select("started_at").gte("started_at", fourteenDaysAgo.toISOString()),
       ]);
+
+      const daysArr = Array(14).fill(0);
+      (recentConvos.data || []).forEach(c => {
+        const d = new Date(c.started_at);
+        const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0 && diffDays < 14) daysArr[13 - diffDays]++;
+      });
+
       const totalConvos = convos.count ?? 0;
       const totalLeads = leads.count ?? 0;
       const totalEscalated = escalated.count ?? 0;
@@ -259,8 +278,17 @@ adminRouter.get("/analytics", async (_req, res, next) => {
         totalLeads,
         escalationRate: totalConvos ? ((totalEscalated / totalConvos) * 100).toFixed(1) + "%" : "0%",
         faqResolutionRate: totalConvos ? ((faqCount / totalConvos) * 100).toFixed(1) + "%" : "0%",
+        conversationsPerDay: daysArr,
+        conversationsTrend: computeTrend(daysArr),
       });
     } else {
+      const daysArr = Array(14).fill(0);
+      Array.from(mem.convs.values()).forEach(c => {
+        const d = new Date(c.started_at);
+        const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0 && diffDays < 14) daysArr[13 - diffDays]++;
+      });
+
       const totalConvos = mem.convs.size;
       const totalLeads = mem.leads.length;
       const totalEscalated = Array.from(mem.convs.values()).filter((c) => c.escalated).length;
@@ -270,6 +298,8 @@ adminRouter.get("/analytics", async (_req, res, next) => {
         totalLeads,
         escalationRate: totalConvos ? ((totalEscalated / totalConvos) * 100).toFixed(1) + "%" : "0%",
         faqResolutionRate: totalConvos ? ((faqCount / totalConvos) * 100).toFixed(1) + "%" : "0%",
+        conversationsPerDay: daysArr,
+        conversationsTrend: computeTrend(daysArr),
       });
     }
   } catch (err) {

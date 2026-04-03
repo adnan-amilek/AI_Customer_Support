@@ -105,25 +105,29 @@ if (process.env.NODE_ENV === "development") {
 // ── Public stats (used by chat widget) ────────────────────────────────────────
 app.get("/api/stats", async (_req, res) => {
   try {
+    const fiveMinsAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
     if (supabase) {
-      const [convos, msgs] = await Promise.all([
+      const [convos, msgs, active] = await Promise.all([
         supabase.from("conversations").select("id", { count: "exact", head: true }),
         supabase.from("messages").select("source").eq("role", "assistant"),
+        supabase.from("conversations").select("id", { count: "exact", head: true }).gte("started_at", fiveMinsAgo)
       ]);
       const sessions = convos.count ?? 0;
       const all = msgs.data ?? [];
       const good = all.filter((m) => m.source !== "fallback").length;
       const csat = all.length ? Math.round((good / all.length) * 100) : 94;
-      res.json({ sessions, csat });
+      const activeSessions = active.count ?? 0;
+      res.json({ sessions, csat, activeSessions });
     } else {
       const sessions = mem.convs.size;
       const assistantMsgs = mem.msgs.filter((m) => m.role === "assistant");
       const good = assistantMsgs.filter((m) => m.source !== "fallback").length;
       const csat = assistantMsgs.length ? Math.round((good / assistantMsgs.length) * 100) : 94;
-      res.json({ sessions, csat });
+      const activeSessions = Array.from(mem.convs.values()).filter((c) => c.started_at >= fiveMinsAgo).length;
+      res.json({ sessions, csat, activeSessions });
     }
   } catch {
-    res.json({ sessions: 0, csat: 94 });
+    res.json({ sessions: 0, csat: 94, activeSessions: 0 });
   }
 });
 

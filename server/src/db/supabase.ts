@@ -186,6 +186,7 @@ export const mem = {
     { id: "62", question: "Can I transfer my Clarix loyalty points to someone else?", answer: "Loyalty points are **non-transferable** and tied to your Clarix account. They cannot be gifted, sold, or moved to another account. If you close your account, all points are permanently forfeited. Points can only be redeemed by the account holder who earned them.", tags: ["transfer points", "share points", "gift points", "move points"], active: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
     { id: "63", question: "Does Clarix offer accessibility features for customers with disabilities?", answer: "Yes — the Clarix website meets **WCAG 2.1 AA accessibility standards**. We support screen readers, keyboard-only navigation, and high-contrast mode. If you need additional assistance with your order or experience any accessibility issues, contact us at **Clarix@qa.team**.", tags: ["accessibility", "disability", "screen reader", "wcag", "visual impairment", "keyboard"], active: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
     { id: "64", question: "What is Clarix's privacy policy regarding my personal data?", answer: "Clarix collects only the data necessary to process your orders and improve your shopping experience. We never sell your data to third parties. You can request a full copy of your data or ask for deletion by emailing **Clarix@qa.team**. Full details are in our Privacy Policy on the website.", tags: ["privacy", "data", "personal data", "gdpr", "data protection", "information"], active: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: "65", question: "What are your pricing details and discounts?", answer: "Our pricing varies by product and can be found directly on our product pages. We also offer a **10% discount** for students and military, as well as a loyalty program where you earn points on every purchase!", tags: ["pricing", "cost", "price", "discounts", "discount"], active: true, created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
   ] as FAQRecord[],
   settings: {
     systemPrompt: "",  // empty = use DEFAULT_SYSTEM_PROMPT
@@ -320,6 +321,8 @@ export async function captureLead(
   email: string
 ): Promise<string> {
   if (supabase) {
+    await upsertConversation(sessionId);
+    
     const { data: conv, error: convErr } = await supabase
       .from("conversations")
       .select("id")

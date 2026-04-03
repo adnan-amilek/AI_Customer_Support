@@ -51,6 +51,7 @@ interface ApiLead {
   name: string;
   email: string;
   submitted_at: string;
+  created_at?: string;
   enriched_data?: Record<string, unknown>;
 }
 interface ApiFAQ {
@@ -67,6 +68,8 @@ interface Analytics {
   totalLeads: number;
   escalationRate: string;
   faqResolutionRate: string;
+  conversationsPerDay?: number[];
+  conversationsTrend?: number;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -105,22 +108,22 @@ const StatCard = ({ label, value, sub, icon, color, trend }: {
   </div>
 );
 
-const BAR_DATA = [12, 18, 14, 22, 19, 27, 31, 24, 28, 35, 29, 38, 33, 41];
-const MiniChart = () => {
-  const max = Math.max(...BAR_DATA);
+const DEFAULT_BAR_DATA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const MiniChart = ({ data = DEFAULT_BAR_DATA, trend = 0 }: { data?: number[], trend?: number }) => {
+  const max = Math.max(...data, 1);
   return (
     <div className="bg-[#111217] rounded-2xl p-5 border border-[#26272f]">
       <div className="flex items-center justify-between mb-4">
         <div>
           <p className="text-sm text-[#9a9cae] font-medium">Conversations / day</p>
-          <p className="text-2xl font-bold text-white mt-0.5">↑ 28%</p>
+          <p className="text-2xl font-bold text-white mt-0.5">{trend >= 0 ? "↑" : "↓"} {Math.abs(trend)}%</p>
         </div>
         <Badge label="Last 14 days" color="indigo" />
       </div>
       <div className="flex items-end gap-1 h-16">
-        {BAR_DATA.map((v, i) => (
+        {data.map((v, i) => (
           <div key={i} className="flex-1 rounded-t-sm transition-all"
-            style={{ height: `${(v / max) * 100}%`, background: i === BAR_DATA.length - 1 ? C.indigo : C.indigo + "55" }} />
+            style={{ height: `${(v / max) * 100}%`, background: i === data.length - 1 ? C.indigo : C.indigo + "55" }} title={`${v} conversations`} />
         ))}
       </div>
       <div className="flex justify-between mt-2">
@@ -285,6 +288,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   // ── data state ────────────────────────────────────────────────────────────
   const [analytics,  setAnalytics]  = useState<Analytics | null>(null);
   const [liveCount,  setLiveCount]  = useState(0);
+  const [activeCount, setActiveCount] = useState(0);
   const [convos,     setConvos]     = useState<ApiConvo[]>([]);
   const [leads,      setLeads]      = useState<ApiLead[]>([]);
   const [faqs,       setFaqs]       = useState<ApiFAQ[]>([]);
@@ -316,6 +320,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
       ]);
       setAnalytics(ana.data);
       setLiveCount(stats.data.sessions ?? 0);
+      setActiveCount(stats.data.activeSessions ?? 0);
     } catch { /* keep previous */ }
     finally { setLoadingData(false); }
   }, []);
@@ -329,7 +334,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
       if (filterTo)   params.to   = new Date(filterTo + "T23:59:59").toISOString();
       const { data } = await api.get("/admin/conversations", { params });
       setConvos(data.data ?? []);
-      setLiveCount(data.total ?? 0);
+      // Intentionally not overwriting liveCount or activeCount with total conversations here
     } catch { setConvos([]); }
     finally { setLoadingData(false); }
   }, [filterEsc, filterFrom, filterTo]);
@@ -457,8 +462,10 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
   const totalLeadsN   = analytics?.totalLeads ?? 0;
   const escRate       = analytics?.escalationRate ?? "0%";
   const faqRate       = analytics?.faqResolutionRate ?? "0%";
-  const faqPct        = parseInt(faqRate) || 0;
-  const escPct        = parseInt(escRate) || 0;
+  const faqPct        = parseFloat(faqRate) || 0;
+  const escPct        = parseFloat(escRate) || 0;
+  const convosPerDay  = analytics?.conversationsPerDay;
+  const trend         = analytics?.conversationsTrend ?? 0;
 
   return (
     <div className="min-h-screen bg-[#0d0e12] font-sans">
@@ -472,7 +479,9 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-            <span className="text-xs text-[#9a9cae]">Live · {liveCount} sessions today</span>
+            <span className="text-xs text-[#9a9cae]">
+              <span className="text-white font-medium">{activeCount} Active Now</span> · {liveCount} total sessions
+            </span>
           </div>
           <button
             onClick={onSignOut}
@@ -498,18 +507,16 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
         {/* ── OVERVIEW ── */}
         {tab === "Overview" && (
           <div className="flex flex-col gap-5">
-            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">
               <StatCard label="Total Conversations" value={totalConvos} sub="All time"
                 icon={<Ic d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" size={18} />} color={C.indigo} />
               <StatCard label="Leads Captured" value={totalLeadsN} sub="All time"
                 icon={<Ic d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" size={18} />} color={C.emerald} />
-              <StatCard label="Escalation Rate" value={escRate} sub="Target < 20%"
-                icon={<Ic d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" size={18} />} color={C.amber} />
               <StatCard label="FAQ Resolution" value={faqRate} sub="Automated answers"
                 icon={<Ic d="M22 11.08V12a10 10 0 11-5.93-9.14M22 4L12 14.01l-3-3" size={18} />} color={C.violet} />
             </div>
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-              <div className="lg:col-span-2"><MiniChart /></div>
+              <div className="lg:col-span-2"><MiniChart data={convosPerDay} trend={trend} /></div>
               <DonutChart faqPct={faqPct} escPct={escPct} />
             </div>
             {/* Recent Activity */}
@@ -660,7 +667,7 @@ export default function AdminDashboard({ onSignOut }: { onSignOut: () => void })
                           </select>
                         </td>
                         <td className="px-4 py-3.5 text-xs font-mono text-[#006AE6]">{l.conversation_id.slice(0, 8)}…</td>
-                        <td className="px-4 py-3.5 text-xs text-[#636674] whitespace-nowrap">{fmtDate(l.submitted_at)}</td>
+                        <td className="px-4 py-3.5 text-xs text-[#636674] whitespace-nowrap">{fmtDate(l.created_at || l.submitted_at)}</td>
                         <td className="px-4 py-3.5">
                           <button onClick={() => showToast(`Email drafted for ${l.name}`)}
                             className="text-xs bg-[#006AE6]/20 border border-[#006AE6]/30 text-[#5aadff] px-2.5 py-1 rounded-lg hover:bg-[#006AE6]/30 font-medium transition-colors">Contact</button>

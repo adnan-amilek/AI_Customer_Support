@@ -321,7 +321,7 @@ function Bubble({ msg }: { msg: ChatMessage }) {
   );
 }
 
-// ── Quick Replies (Pricing + Demo only — shown on first message) ───────────────
+// ── Quick Replies (Expanded with Pricing, Demo, and FAQs) ───────────────
 function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
   settings: Settings;
   onFAQ: (msg: string) => void;
@@ -329,19 +329,28 @@ function ChatQuickReplies({ settings, onFAQ, onLead, visible }: {
   visible: boolean;
 }) {
   const buttons = [
+    { label: "💰  Give Me Pricing Details",  gate: "faqs"  as keyof Settings, action: () => onFAQ("What are your pricing details and discounts?") },
+    { label: "🎯  Need Demo",                gate: "leads" as keyof Settings, action: onLead },
     { label: "🚚  Shipping & Delivery Info", gate: "faqs"  as keyof Settings, action: () => onFAQ("How much does shipping cost?") },
     { label: "🔄  Returns & Refunds",        gate: "faqs"  as keyof Settings, action: () => onFAQ("What is your return policy?") },
     { label: "📦  Track My Order",           gate: "faqs"  as keyof Settings, action: () => onFAQ("How do I track my order?") },
-    { label: "💳  Payment Options",          gate: "leads" as keyof Settings, action: () => onFAQ("What payment methods do you accept?") },
+    { label: "💳  Payment Options",          gate: "faqs"  as keyof Settings, action: () => onFAQ("What payment methods do you accept?") },
+    { label: "⭐  Loyalty Rewards",          gate: "faqs"  as keyof Settings, action: () => onFAQ("How do Clarix loyalty points work?") },
+    { label: "📞  Contact Support",          gate: "faqs"  as keyof Settings, action: () => onFAQ("How do I contact Clarix support?") },
+    { label: "✏️  Cancel/Modify Order",      gate: "faqs"  as keyof Settings, action: () => onFAQ("Can I cancel or modify my Clarix order?") },
+    { label: "💔  Report Damaged Item",      gate: "faqs"  as keyof Settings, action: () => onFAQ("My item arrived damaged or wrong — what do I do?") },
+    { label: "🛡️  Warranty Claims",          gate: "faqs"  as keyof Settings, action: () => onFAQ("Do Clarix products come with a warranty?") },
+    { label: "🎓  Student/Military Discount",gate: "faqs"  as keyof Settings, action: () => onFAQ("Do you offer a student or military discount?") },
+    { label: "🔑  Reset Password",           gate: "faqs"  as keyof Settings, action: () => onFAQ("How do I reset my password?") },
   ].filter((b) => settings[b.gate]);
 
   if (!visible || buttons.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-2.5 mb-[10px] px-[20px] ml-[44px] items-start">
+    <div className="flex flex-wrap gap-2.5 mb-[10px] px-[20px] ml-[44px]">
       {buttons.map((b) => (
         <button key={b.label} onClick={b.action}
-          className="text-left px-4 py-3 rounded-xl border border-[#363843] bg-[#1f212a] text-[15px] font-semibold text-[#9a9cae] hover:bg-[#26272f] hover:text-[#f5f5f5] hover:border-[#464852] transition-all duration-150 active:scale-[0.98] leading-snug">
+          className="px-4 py-3 rounded-xl border border-[#363843] bg-[#1f212a] text-[15px] font-semibold text-[#9a9cae] hover:bg-[#26272f] hover:text-[#f5f5f5] hover:border-[#464852] transition-all duration-150 active:scale-[0.98] leading-snug whitespace-nowrap">
           {b.label}
         </button>
       ))}
